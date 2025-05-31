@@ -1,0 +1,45 @@
+{
+  "users_data": {
+    "983196900910039090": {
+      "dinheiro": 5000,
+      "jogadores": [
+        {
+          "nome": "Kai Guedes",
+          "posicao": "Ponta Dir.",
+          "habilidade": 92,
+          "over": 90,
+          "tipo": "comprado"
+        }
+      ],
+      "escalacao": {
+        "goleiro": null,
+        "zagueiro1": null,
+        "zagueiro2": null,
+        "lateral_esq": null,
+        "lateral_dir": null,
+        "volante": null,
+        "meia": null,
+        "ponta_esq": null,
+        "ponta_dir": null,
+        "atacante1": null,
+        "atacante2": null
+      },
+      "vitorias": 0,
+      "derrotas": 0,
+      "empates": 0
+    }
+  },
+  "ligas": {
+    "1": {
+      "nome": "s",
+      "criador": 983196900910039090,
+      "participantes": [
+        983196900910039090
+      ],
+      "partidas": [],
+      "tabela": {}
+    }
+  },
+  "confrontos": {},
+  "emprestimos": {}
+}
