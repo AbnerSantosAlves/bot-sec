@@ -1129,7 +1129,7 @@ async def ajuda(ctx):
 TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 
 if TOKEN:
-    bot.run(TOKEN)
+    bot.run(MTM3NjA1MzkxMTg5MDE2OTkwNw.Gu5WtH.8YLugAlvHpaa_YaUfl7vcSNNJaZ3NYZgThmUzw)
 else:
     print("❌ Token do Discord não encontrado!")
     print("Configure a variável de ambiente DISCORD_BOT_TOKEN ou adicione nas Secrets do Replit")
