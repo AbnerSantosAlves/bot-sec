@@ -747,26 +747,35 @@ class JogadorSelect(discord.ui.Select):
         
         options = []
         
-        # Adiciona jogadores próprios
-        for jogador in user_data['jogadores'][:20]:  # Máximo 20
-            emoji = "⭐" if jogador['tipo'] == 'criado' else "💰"
-            options.append(discord.SelectOption(
-                label=f"{jogador['nome']} - {jogador['habilidade']}%",
-                value=f"proprio_{jogador['nome']}",
-                emoji=emoji,
-                description=f"{jogador['posicao']} | Over: {jogador['over']}"
-            ))
+        # Lista de jogadores já escalados
+        jogadores_escalados = []
+        for pos, jogador in user_data['escalacao'].items():
+            if jogador and pos != posicao:  # Permite reescalar a mesma posição
+                jogadores_escalados.append(jogador['nome'])
         
-        # Adiciona jogadores emprestados
+        # Adiciona jogadores próprios (apenas os não escalados)
+        for jogador in user_data['jogadores'][:20]:  # Máximo 20
+            if jogador['nome'] not in jogadores_escalados:
+                tipo = jogador.get('tipo', 'comprado')
+                emoji = "⭐" if tipo == 'criado' else "💰"
+                options.append(discord.SelectOption(
+                    label=f"{jogador['nome']} - {jogador['habilidade']}%",
+                    value=f"proprio_{jogador['nome']}",
+                    emoji=emoji,
+                    description=f"{jogador['posicao']} | Over: {jogador['over']}"
+                ))
+        
+        # Adiciona jogadores emprestados (apenas os não escalados)
         user_id = str(author.id)
         if hasattr(vados_instance, 'emprestimos') and user_id in vados_instance.emprestimos:
             for jogador in vados_instance.emprestimos[user_id]:
-                options.append(discord.SelectOption(
-                    label=f"{jogador['nome']} (EMP) - {jogador['habilidade']}%",
-                    value=f"emprestado_{jogador['nome']}",
-                    emoji="🤝",
-                    description=f"{jogador['posicao']} | {jogador['partidas_restantes']} jogo restante"
-                ))
+                if jogador['nome'] not in jogadores_escalados:
+                    options.append(discord.SelectOption(
+                        label=f"{jogador['nome']} (EMP) - {jogador['habilidade']}%",
+                        value=f"emprestado_{jogador['nome']}",
+                        emoji="🤝",
+                        description=f"{jogador['posicao']} | {jogador['partidas_restantes']} jogo restante"
+                    ))
         
         if not options:
             options.append(discord.SelectOption(label="Nenhum jogador disponível", value="vazio"))
@@ -813,7 +822,8 @@ class JogadorSelect(discord.ui.Select):
             embed.add_field(name="🎯 Habilidade", value=f"{jogador_escalado['habilidade']}%", inline=True)
             embed.add_field(name="📋 Posição Original", value=jogador_escalado['posicao'], inline=True)
             embed.add_field(name="📊 Over", value=jogador_escalado['over'], inline=True)
-            embed.add_field(name="🌟 Tipo", value="Criado" if jogador_escalado['tipo'] == 'criado' else "Comprado", inline=True)
+            tipo = jogador_escalado.get('tipo', 'comprado')
+            embed.add_field(name="🌟 Tipo", value="Criado" if tipo == 'criado' else "Comprado", inline=True)
             
             embed.set_footer(text="✅ Escalação atualizada! Use -time para ver a formação completa.")
             
@@ -1224,30 +1234,26 @@ class ConfrontoView(discord.ui.View):
             await interaction.response.send_message("❌ Apenas o desafiado pode aceitar!", ephemeral=True)
             return
         
-        resultado = self.simular_partida()
-        embed = self.criar_embed_resultado(resultado)
+        # Inicia a partida com eventos em tempo real
+        embed_inicial = discord.Embed(
+            title="🏟️ PARTIDA EM ANDAMENTO",
+            description="⚽ A partida está começando...",
+            color=0xffff00
+        )
+        embed_inicial.add_field(name=f"🔥 {self.desafiante.display_name}", value="Preparando time...", inline=True)
+        embed_inicial.add_field(name="🆚", value="**VS**", inline=True)
+        embed_inicial.add_field(name=f"🔥 {self.oponente.display_name}", value="Preparando time...", inline=True)
         
-        # Atualiza estatísticas e dinheiro
-        if resultado['vencedor'] == 'desafiante':
-            self.desafiante_data['vitorias'] += 1
-            self.oponente_data['derrotas'] += 1
-            self.desafiante_data['dinheiro'] += 5000  # Prêmio por vitória
-        elif resultado['vencedor'] == 'oponente':
-            self.oponente_data['vitorias'] += 1
-            self.desafiante_data['derrotas'] += 1
-            self.oponente_data['dinheiro'] += 5000  # Prêmio por vitória
-        else:
-            self.desafiante_data['empates'] += 1
-            self.oponente_data['empates'] += 1
-            self.desafiante_data['dinheiro'] += 2000  # Prêmio menor por empate
-            self.oponente_data['dinheiro'] += 2000
+        await interaction.response.edit_message(embed=embed_inicial, view=None)
+        
+        # Simula eventos em tempo real
+        await self.simular_confronto_eventos(interaction)
         
         # Remove jogadores emprestados
         self.remover_emprestados(str(self.desafiante.id))
         self.remover_emprestados(str(self.oponente.id))
         
         await self.vados.save_data()
-        await interaction.response.edit_message(embed=embed, view=None)
     
     @discord.ui.button(label="❌ Recusar", style=discord.ButtonStyle.danger, emoji="🚫")
     async def recusar(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -1338,6 +1344,222 @@ class ConfrontoView(discord.ui.View):
             embed.color = 0xffff00
         
         embed.set_footer(text="⚽ Boa partida! Use -stats para ver suas estatísticas.")
+        
+        return embed
+    
+    async def simular_confronto_eventos(self, interaction):
+        eventos = []
+        gols_desafiante = 0
+        gols_oponente = 0
+        
+        escalacao_desafiante = self.desafiante_data['escalacao']
+        escalacao_oponente = self.oponente_data['escalacao']
+        
+        # Simula 9 minutos de jogo com eventos
+        for minuto in range(1, 10):
+            await asyncio.sleep(3)  # Pausa entre eventos
+            
+            # Determina qual time tem a posse
+            forca_desafiante = self.calcular_forca_time(escalacao_desafiante)
+            forca_oponente = self.calcular_forca_time(escalacao_oponente)
+            
+            if random.randint(1, 100) <= (forca_desafiante / (forca_desafiante + forca_oponente)) * 100:
+                time_atacante = "desafiante"
+                escalacao_atacante = escalacao_desafiante
+                escalacao_defensor = escalacao_oponente
+                nome_time_atacante = self.desafiante.display_name
+                nome_time_defensor = self.oponente.display_name
+            else:
+                time_atacante = "oponente"
+                escalacao_atacante = escalacao_oponente
+                escalacao_defensor = escalacao_desafiante
+                nome_time_atacante = self.oponente.display_name
+                nome_time_defensor = self.desafiante.display_name
+            
+            # Gera evento baseado nas posições dos jogadores
+            evento = self.gerar_evento_confronto(escalacao_atacante, escalacao_defensor, nome_time_atacante, nome_time_defensor)
+            eventos.append(f"⏱️ {minuto}' - {evento['texto']}")
+            
+            # Verifica se foi gol
+            if evento['tipo'] == 'gol':
+                if time_atacante == "desafiante":
+                    gols_desafiante += 1
+                else:
+                    gols_oponente += 1
+            
+            # Atualiza embed com o evento
+            embed_minuto = discord.Embed(
+                title=f"🏟️ TEMPO REAL - {minuto}º Minuto",
+                description=f"**Placar:** {self.desafiante.display_name} {gols_desafiante} x {gols_oponente} {self.oponente.display_name}",
+                color=0x00ff00 if evento['tipo'] == 'gol' else 0xffff00
+            )
+            
+            embed_minuto.add_field(
+                name="🔥 Último Lance",
+                value=evento['texto'],
+                inline=False
+            )
+            
+            if len(eventos) > 1:
+                eventos_recentes = eventos[-3:] if len(eventos) > 3 else eventos[:-1]
+                embed_minuto.add_field(
+                    name="📜 Lances Anteriores",
+                    value="\n".join(eventos_recentes),
+                    inline=False
+                )
+            
+            await interaction.edit_original_response(embed=embed_minuto)
+        
+        # Resultado final
+        await asyncio.sleep(2)
+        embed_final = self.criar_embed_resultado_eventos(gols_desafiante, gols_oponente, eventos)
+        
+        # Atualiza estatísticas e dinheiro
+        if gols_desafiante > gols_oponente:
+            self.desafiante_data['vitorias'] += 1
+            self.oponente_data['derrotas'] += 1
+            self.desafiante_data['dinheiro'] += 5000
+        elif gols_oponente > gols_desafiante:
+            self.oponente_data['vitorias'] += 1
+            self.desafiante_data['derrotas'] += 1
+            self.oponente_data['dinheiro'] += 5000
+        else:
+            self.desafiante_data['empates'] += 1
+            self.oponente_data['empates'] += 1
+            self.desafiante_data['dinheiro'] += 2000
+            self.oponente_data['dinheiro'] += 2000
+        
+        await interaction.edit_original_response(embed=embed_final)
+    
+    def gerar_evento_confronto(self, escalacao_atacante, escalacao_defensor, nome_atacante, nome_defensor):
+        # Seleciona jogadores baseado na probabilidade da posição
+        posicoes_ataque = ['atacante1', 'atacante2', 'ponta_esq', 'ponta_dir', 'meia']
+        posicoes_meio = ['volante', 'meia']
+        posicoes_defesa = ['zagueiro1', 'zagueiro2', 'lateral_esq', 'lateral_dir', 'goleiro']
+        
+        # Jogador que inicia a jogada
+        if random.randint(1, 100) <= 60:  # 60% chance de atacante
+            posicoes_iniciais = posicoes_ataque
+        else:  # 40% chance de meio-campo
+            posicoes_iniciais = posicoes_meio
+        
+        jogador_atacante = None
+        for pos in posicoes_iniciais:
+            if escalacao_atacante.get(pos):
+                jogador_atacante = escalacao_atacante[pos]
+                break
+        
+        if not jogador_atacante:
+            # Fallback para qualquer jogador
+            jogador_atacante = next(iter(escalacao_atacante.values()))
+        
+        # Determina tipo de evento baseado na habilidade
+        rand = random.randint(1, 100)
+        habilidade_atacante = jogador_atacante['habilidade']
+        
+        if rand <= 25 + (habilidade_atacante - 75):  # Gol
+            return {
+                'tipo': 'gol',
+                'texto': f"⚽ **GOL DE {jogador_atacante['nome'].upper()}!** Que jogada espetacular do {nome_atacante}!"
+            }
+        elif rand <= 45:  # Defesa
+            # Seleciona defensor
+            defensor = self.selecionar_defensor(escalacao_defensor, jogador_atacante)
+            if defensor['posicao'].lower() == 'goleiro':
+                return {
+                    'tipo': 'defesa',
+                    'texto': f"🥅 **DEFESA!** {defensor['nome']} faz uma defesa espetacular! {jogador_atacante['nome']} quase marcou!"
+                }
+            else:
+                return {
+                    'tipo': 'bloqueio',
+                    'texto': f"🛡️ **BLOQUEIO!** {defensor['nome']} bloqueia o chute perigoso de {jogador_atacante['nome']}!"
+                }
+        elif rand <= 65:  # Contra-ataque
+            meio_campista = escalacao_defensor.get('meia') or escalacao_defensor.get('volante')
+            if meio_campista:
+                return {
+                    'tipo': 'contra_ataque',
+                    'texto': f"⚡ **CONTRA-ATAQUE!** {meio_campista['nome']} rouba a bola e inicia jogada rápida para o {nome_defensor}!"
+                }
+            else:
+                return {
+                    'tipo': 'recuperacao',
+                    'texto': f"🔄 **RECUPERAÇÃO!** {nome_defensor} recupera a posse de bola no meio-campo!"
+                }
+        elif rand <= 80:  # Chute defendido
+            return {
+                'tipo': 'chute_defendido',
+                'texto': f"📤 **PARA FORA!** {jogador_atacante['nome']} chuta forte, mas a bola passa raspando a trave!"
+            }
+        else:  # Falta ou lateral
+            return {
+                'tipo': 'falta',
+                'texto': f"⚠️ **FALTA!** Jogada dura sobre {jogador_atacante['nome']}, o árbitro marca falta para o {nome_atacante}!"
+            }
+    
+    def selecionar_defensor(self, escalacao_defensor, jogador_atacante):
+        pos_atacante = jogador_atacante['posicao'].lower()
+        
+        # Lógica de quem defende baseado na posição do atacante
+        if 'atacante' in pos_atacante or 'ponta' in pos_atacante:
+            # Atacantes normalmente enfrentam zagueiros
+            defensores_possiveis = ['zagueiro1', 'zagueiro2', 'goleiro']
+        elif 'meia' in pos_atacante or 'meio' in pos_atacante:
+            # Meias enfrentam volantes ou zagueiros
+            defensores_possiveis = ['volante', 'zagueiro1', 'zagueiro2']
+        else:
+            # Outros enfrentam laterais ou zagueiros
+            defensores_possiveis = ['lateral_esq', 'lateral_dir', 'zagueiro1', 'zagueiro2']
+        
+        # Seleciona defensor disponível
+        for pos in defensores_possiveis:
+            if escalacao_defensor.get(pos):
+                return escalacao_defensor[pos]
+        
+        # Fallback para goleiro
+        return escalacao_defensor.get('goleiro', next(iter(escalacao_defensor.values())))
+    
+    def criar_embed_resultado_eventos(self, gols_desafiante, gols_oponente, eventos):
+        embed = discord.Embed(
+            title="🏁 PARTIDA FINALIZADA!",
+            color=0x00ff00
+        )
+        
+        placar = f"**{self.desafiante.display_name}** {gols_desafiante} ⚽ {gols_oponente} **{self.oponente.display_name}**"
+        embed.add_field(name="📊 Placar Final", value=placar, inline=False)
+        
+        if gols_desafiante > gols_oponente:
+            embed.add_field(name="🏆 Vencedor", value=f"{self.desafiante.mention} 🎉", inline=True)
+            embed.add_field(name="💰 Prêmio", value="R$ 5.000", inline=True)
+            embed.color = 0x00ff00
+        elif gols_oponente > gols_desafiante:
+            embed.add_field(name="🏆 Vencedor", value=f"{self.oponente.mention} 🎉", inline=True)
+            embed.add_field(name="💰 Prêmio", value="R$ 5.000", inline=True)
+            embed.color = 0x00ff00
+        else:
+            embed.add_field(name="🤝 Resultado", value="Empate! Ambos recebem R$ 2.000", inline=False)
+            embed.color = 0xffff00
+        
+        # Mostra gols da partida
+        gols_eventos = [e for e in eventos if "GOL" in e.upper()]
+        if gols_eventos:
+            embed.add_field(
+                name="⚽ Gols da Partida",
+                value="\n".join(gols_eventos),
+                inline=False
+            )
+        
+        # Mostra lances importantes
+        lances_importantes = [e for e in eventos if any(palavra in e.upper() for palavra in ["DEFESA", "BLOQUEIO", "CONTRA-ATAQUE"])]
+        if lances_importantes:
+            embed.add_field(
+                name="🔥 Lances de Destaque",
+                value="\n".join(lances_importantes[-3:]),  # Últimos 3 lances importantes
+                inline=False
+            )
+        
+        embed.set_footer(text="🏟️ Que partida! Use -stats para ver suas estatísticas atualizadas.")
         
         return embed
     
