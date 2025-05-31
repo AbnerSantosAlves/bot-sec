@@ -399,7 +399,7 @@
         }
       },
       "vitorias": 1,
-      "derrotas": 1,
+      "derrotas": 0,
       "empates": 0
     },
     "1248472513600688229": {
@@ -520,7 +520,7 @@
       "ultimo_ganho_automatico": "2025-05-31T23:00:54.456454"
     },
     "1350661643960324096": {
-      "dinheiro": 105000,
+      "dinheiro": 100000,
       "jogadores": [
         {
           "nome": "Mark Lispector",
@@ -912,39 +912,8 @@
           "tipo": "admin_grant"
         }
       },
-      "vitorias": 1,
-      "derrotas": 1,
-      "empates": 0,
-      "jogadores_criados": 1,
-      "ultimo_ganho_automatico": null
-    },
-    "1167254751038156881": {
-      "dinheiro": 100000,
-      "jogadores": [
-        {
-          "nome": "Gustavo J.",
-          "posicao": "Lateral",
-          "habilidade": 46,
-          "over": 50,
-          "tipo": "criado",
-          "evolucoes": 0
-        }
-      ],
-      "escalacao": {
-        "goleiro": null,
-        "zagueiro1": null,
-        "zagueiro2": null,
-        "lateral_esq": null,
-        "lateral_dir": null,
-        "volante": null,
-        "meia": null,
-        "ponta_esq": null,
-        "ponta_dir": null,
-        "atacante1": null,
-        "atacante2": null
-      },
       "vitorias": 0,
-      "derrotas": 0,
+      "derrotas": 1,
       "empates": 0,
       "jogadores_criados": 1,
       "ultimo_ganho_automatico": null
