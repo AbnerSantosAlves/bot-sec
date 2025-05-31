@@ -14,53 +14,56 @@ bot = commands.Bot(command_prefix='-', intents=intents)
 
 # Dados dos jogadores disponíveis no olheiro
 JOGADORES_OLHEIRO = [
-    {"nome": "Oliver Santos", "posicao": "Goleiro", "over": 80, "habilidade": 82, "preco": 50000},
-    {"nome": "Zargão", "posicao": "Zagueiro", "over": 80, "habilidade": 82, "preco": 45000},
-    {"nome": "Bruno", "posicao": "Zagueiro", "over": 84, "habilidade": 86, "preco": 60000},
-    {"nome": "Anthony", "posicao": "Meia", "over": 85, "habilidade": 87, "preco": 65000},
-    {"nome": "Lewis Ferguson", "posicao": "Atacante", "over": 79, "habilidade": 78, "preco": 40000},
-    {"nome": "Saulo Bezerra", "posicao": "Atacante", "over": 88, "habilidade": 89, "preco": 80000},
-    {"nome": "Pedro Caldas", "posicao": "Atacante", "over": 85, "habilidade": 87, "preco": 65000},
-    {"nome": "Brunno Santos", "posicao": "Meio Campo", "over": 80, "habilidade": 82, "preco": 45000},
-    {"nome": "Zau", "posicao": "Goleiro", "over": 88, "habilidade": 89, "preco": 75000},
-    {"nome": "Hiroshi", "posicao": "Goleiro", "over": 84, "habilidade": 86, "preco": 55000},
-    {"nome": "Sassa", "posicao": "Goleiro", "over": 76, "habilidade": 75, "preco": 35000},
-    {"nome": "Oliver Wayne", "posicao": "Zagueiro", "over": 91, "habilidade": 93, "preco": 100000},
-    {"nome": "Corvino", "posicao": "Ponta", "over": 86, "habilidade": 88, "preco": 70000},
-    {"nome": "Pdrz", "posicao": "Atacante", "over": 86, "habilidade": 88, "preco": 70000},
-    {"nome": "Nott", "posicao": "Meio", "over": 83, "habilidade": 85, "preco": 55000},
-    {"nome": "Keven", "posicao": "Atacante", "over": 86, "habilidade": 88, "preco": 70000},
-    {"nome": "Ronaldinho Cruzeiro", "posicao": "Ponta", "over": 84, "habilidade": 86, "preco": 60000},
-    {"nome": "Carlos Cruzeiro", "posicao": "Meio", "over": 85, "habilidade": 87, "preco": 65000},
-    {"nome": "Gustavo Soares", "posicao": "Meia-Central", "over": 82, "habilidade": 83, "preco": 50000},
-    {"nome": "Crazy", "posicao": "Ponta", "over": 88, "habilidade": 89, "preco": 80000},
-    {"nome": "Pietro", "posicao": "Volante", "over": 80, "habilidade": 82, "preco": 45000},
-    {"nome": "Matheus Taylor", "posicao": "Ponta Esq.", "over": 96, "habilidade": 98, "preco": 150000},
-    {"nome": "Juliano Henrique", "posicao": "Atacante", "over": 99, "habilidade": 100, "preco": 200000},
-    {"nome": "Michael Owen", "posicao": "Goleiro", "over": 99, "habilidade": 100, "preco": 200000},
-    {"nome": "Phillipe Guedes", "posicao": "Atacante", "over": 88, "habilidade": 89, "preco": 80000},
-    {"nome": "Prince", "posicao": "Ponta Direita", "over": 91, "habilidade": 93, "preco": 100000},
-    {"nome": "Hiroshi", "posicao": "Zagueiro", "over": 90, "habilidade": 92, "preco": 95000},
-    {"nome": "Felipe Botelho", "posicao": "Meio Campo", "over": 87, "habilidade": 88, "preco": 75000},
-    {"nome": "M. De Light", "posicao": "Zagueiro", "over": 90, "habilidade": 92, "preco": 95000},
-    {"nome": "Kai Guedes", "posicao": "Ponta Dir.", "over": 90, "habilidade": 92, "preco": 95000},
-    {"nome": "Macaé", "posicao": "Atacante", "over": 89, "habilidade": 90, "preco": 85000},
-    {"nome": "Lucas Bask", "posicao": "Zagueiro", "over": 79, "habilidade": 78, "preco": 40000},
-    {"nome": "Sam Ker", "posicao": "Atacante", "over": 75, "habilidade": 74, "preco": 30000},
-    {"nome": "Jake Willy", "posicao": "Atacante", "over": 69, "habilidade": 68, "preco": 25000},
-    {"nome": "Zake Zau", "posicao": "Volante", "over": 80, "habilidade": 82, "preco": 45000},
-    {"nome": "Helena Silva", "posicao": "Zagueira", "over": 70, "habilidade": 70, "preco": 28000},
-    {"nome": "Luan Alves", "posicao": "Goleiro", "over": 69, "habilidade": 68, "preco": 25000},
-    {"nome": "Fernando M.", "posicao": "Atacante", "over": 71, "habilidade": 71, "preco": 30000},
-    {"nome": "Coutinho S.", "posicao": "Meio Campo", "over": 69, "habilidade": 68, "preco": 25000},
-    {"nome": "Kaio Becker", "posicao": "Zagueiro", "over": 67, "habilidade": 66, "preco": 22000},
-    {"nome": "Caio Miguel", "posicao": "Goleiro", "over": 69, "habilidade": 68, "preco": 25000},
-    {"nome": "Alex", "posicao": "Volante", "over": 75, "habilidade": 74, "preco": 32000},
-    {"nome": "Matheus Mtzx", "posicao": "Ponta Dir.", "over": 70, "habilidade": 70, "preco": 28000}
+    {"nome": "Oliver Santos", "posicao": "Goleiro", "over": 80, "habilidade": 82, "valor_mercado": 50000},
+    {"nome": "Zargão", "posicao": "Zagueiro", "over": 80, "habilidade": 82, "valor_mercado": 45000},
+    {"nome": "Bruno", "posicao": "Zagueiro", "over": 84, "habilidade": 86, "valor_mercado": 60000},
+    {"nome": "Anthony", "posicao": "Meia", "over": 85, "habilidade": 87, "valor_mercado": 65000},
+    {"nome": "Lewis Ferguson", "posicao": "Atacante", "over": 79, "habilidade": 78, "valor_mercado": 40000},
+    {"nome": "Saulo Bezerra", "posicao": "Atacante", "over": 88, "habilidade": 89, "valor_mercado": 80000},
+    {"nome": "Pedro Caldas", "posicao": "Atacante", "over": 85, "habilidade": 87, "valor_mercado": 65000},
+    {"nome": "Brunno Santos", "posicao": "Meio Campo", "over": 80, "habilidade": 82, "valor_mercado": 45000},
+    {"nome": "Zau", "posicao": "Goleiro", "over": 88, "habilidade": 89, "valor_mercado": 75000},
+    {"nome": "Hiroshi", "posicao": "Goleiro", "over": 84, "habilidade": 86, "valor_mercado": 55000},
+    {"nome": "Sassa", "posicao": "Goleiro", "over": 76, "habilidade": 75, "valor_mercado": 35000},
+    {"nome": "Oliver Wayne", "posicao": "Zagueiro", "over": 91, "habilidade": 93, "valor_mercado": 100000},
+    {"nome": "Corvino", "posicao": "Ponta", "over": 86, "habilidade": 88, "valor_mercado": 70000},
+    {"nome": "Pdrz", "posicao": "Atacante", "over": 86, "habilidade": 88, "valor_mercado": 70000},
+    {"nome": "Nott", "posicao": "Meio", "over": 83, "habilidade": 85, "valor_mercado": 55000},
+    {"nome": "Keven", "posicao": "Atacante", "over": 86, "habilidade": 88, "valor_mercado": 70000},
+    {"nome": "Ronaldinho Cruzeiro", "posicao": "Ponta", "over": 84, "habilidade": 86, "valor_mercado": 60000},
+    {"nome": "Carlos Cruzeiro", "posicao": "Meio", "over": 85, "habilidade": 87, "valor_mercado": 65000},
+    {"nome": "Gustavo Soares", "posicao": "Meia-Central", "over": 82, "habilidade": 83, "valor_mercado": 50000},
+    {"nome": "Crazy", "posicao": "Ponta", "over": 88, "habilidade": 89, "valor_mercado": 80000},
+    {"nome": "Pietro", "posicao": "Volante", "over": 80, "habilidade": 82, "valor_mercado": 45000},
+    {"nome": "Matheus Taylor", "posicao": "Ponta Esq.", "over": 96, "habilidade": 98, "valor_mercado": 150000},
+    {"nome": "Juliano Henrique", "posicao": "Atacante", "over": 99, "habilidade": 100, "valor_mercado": 200000},
+    {"nome": "Michael Owen", "posicao": "Goleiro", "over": 99, "habilidade": 100, "valor_mercado": 200000},
+    {"nome": "Phillipe Guedes", "posicao": "Atacante", "over": 88, "habilidade": 89, "valor_mercado": 80000},
+    {"nome": "Prince", "posicao": "Ponta Direita", "over": 91, "habilidade": 93, "valor_mercado": 100000},
+    {"nome": "Hiroshi", "posicao": "Zagueiro", "over": 90, "habilidade": 92, "valor_mercado": 95000},
+    {"nome": "Felipe Botelho", "posicao": "Meio Campo", "over": 87, "habilidade": 88, "valor_mercado": 75000},
+    {"nome": "M. De Light", "posicao": "Zagueiro", "over": 90, "habilidade": 92, "valor_mercado": 95000},
+    {"nome": "Kai Guedes", "posicao": "Ponta Dir.", "over": 90, "habilidade": 92, "valor_mercado": 95000},
+    {"nome": "Macaé", "posicao": "Atacante", "over": 89, "habilidade": 90, "valor_mercado": 85000},
+    {"nome": "Lucas Bask", "posicao": "Zagueiro", "over": 79, "habilidade": 78, "valor_mercado": 40000},
+    {"nome": "Sam Ker", "posicao": "Atacante", "over": 75, "habilidade": 74, "valor_mercado": 30000},
+    {"nome": "Jake Willy", "posicao": "Atacante", "over": 69, "habilidade": 68, "valor_mercado": 25000},
+    {"nome": "Zake Zau", "posicao": "Volante", "over": 80, "habilidade": 82, "valor_mercado": 45000},
+    {"nome": "Helena Silva", "posicao": "Zagueira", "over": 70, "habilidade": 70, "valor_mercado": 28000},
+    {"nome": "Luan Alves", "posicao": "Goleiro", "over": 69, "habilidade": 68, "valor_mercado": 25000},
+    {"nome": "Fernando M.", "posicao": "Atacante", "over": 71, "habilidade": 71, "valor_mercado": 30000},
+    {"nome": "Coutinho S.", "posicao": "Meio Campo", "over": 69, "habilidade": 68, "valor_mercado": 25000},
+    {"nome": "Kaio Becker", "posicao": "Zagueiro", "over": 67, "habilidade": 66, "valor_mercado": 22000},
+    {"nome": "Caio Miguel", "posicao": "Goleiro", "over": 69, "habilidade": 68, "valor_mercado": 25000},
+    {"nome": "Alex", "posicao": "Volante", "over": 75, "habilidade": 74, "valor_mercado": 32000},
+    {"nome": "Matheus Mtzx", "posicao": "Ponta Dir.", "over": 70, "habilidade": 70, "valor_mercado": 28000}
 ]
 
 # Arquivo para salvar dados
 DATA_FILE = "vados_bot_data.json"
+
+# ID do owner (coloque seu ID aqui)
+OWNER_ID = 983196900910039090  # Substitua pelo seu ID
 
 class VadosBot:
     def __init__(self):
@@ -115,7 +118,8 @@ class VadosBot:
                 },
                 'vitorias': 0,
                 'derrotas': 0,
-                'empates': 0
+                'empates': 0,
+                'jogadores_criados': 0
             }
         return self.users_data[str(user_id)]
 
@@ -127,128 +131,199 @@ async def on_ready():
     print(f'🚀 {bot.user} está online e pronto para gerenciar o futebol!')
     print('=' * 50)
 
-# Comando para criar jogador personalizado
-@bot.command(name='criar_jogador')
-async def criar_jogador(ctx, nome: str, posicao: str, habilidade: int = None):
-    """Cria um jogador personalizado para seu time"""
-    user_data = vados.get_user_data(ctx.author.id)
+# Event para comandos inválidos
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        embed = discord.Embed(
+            title="❌ Comando Não Encontrado",
+            description=f"O comando `{ctx.message.content}` não existe!\nUse `-ajuda` para ver todos os comandos disponíveis.",
+            color=0xff0000
+        )
+        embed.set_footer(text="💡 Dica: Verifique se digitou corretamente!")
+        await ctx.send(embed=embed)
+
+# Comando para ver o time
+@bot.command(name='time')
+async def ver_time(ctx, usuario: discord.Member = None):
+    """Visualiza o time escalado de um jogador"""
+    if usuario is None:
+        usuario = ctx.author
     
-    if habilidade is None:
-        habilidade = random.randint(60, 85)
-    
-    habilidade = max(50, min(100, habilidade))
-    
-    jogador = {
-        'nome': nome,
-        'posicao': posicao,
-        'habilidade': habilidade,
-        'over': habilidade - random.randint(0, 5),
-        'tipo': 'criado'
-    }
-    
-    user_data['jogadores'].append(jogador)
-    await vados.save_data()
+    user_data = vados.get_user_data(usuario.id)
+    escalacao = user_data['escalacao']
     
     embed = discord.Embed(
-        title="⚽ Jogador Criado!",
-        description=f"**{nome}** foi adicionado ao seu elenco!",
+        title=f"⚽ Time de {usuario.display_name}",
         color=0x00ff00
     )
-    embed.add_field(name="Posição", value=posicao, inline=True)
-    embed.add_field(name="Habilidade", value=f"{habilidade}%", inline=True)
-    embed.add_field(name="Over", value=jogador['over'], inline=True)
+    
+    # Verifica se tem escalação
+    jogadores_escalados = [j for j in escalacao.values() if j is not None]
+    
+    if not jogadores_escalados:
+        embed.description = "❌ Nenhum jogador escalado ainda!\nUse `-escalar` para montar seu time."
+        embed.color = 0xff9900
+    else:
+        # Formação visual melhorada
+        formacao = f"""
+```
+                {escalacao['goleiro']['nome'][:12] if escalacao['goleiro'] else '-----'}
+                        ({escalacao['goleiro']['habilidade']}%)
+
+    {escalacao['zagueiro1']['nome'][:8] if escalacao['zagueiro1'] else '-----'}        {escalacao['zagueiro2']['nome'][:8] if escalacao['zagueiro2'] else '-----'}
+    ({escalacao['zagueiro1']['habilidade']}%)      ({escalacao['zagueiro2']['habilidade']}%)
+
+{escalacao['lateral_esq']['nome'][:8] if escalacao['lateral_esq'] else '-----'}                            {escalacao['lateral_dir']['nome'][:8] if escalacao['lateral_dir'] else '-----'}
+({escalacao['lateral_esq']['habilidade']}%)                          ({escalacao['lateral_dir']['habilidade']}%)
+
+         {escalacao['volante']['nome'][:8] if escalacao['volante'] else '-----'}    {escalacao['meia']['nome'][:8] if escalacao['meia'] else '-----'}
+         ({escalacao['volante']['habilidade']}%)  ({escalacao['meia']['habilidade']}%)
+
+    {escalacao['ponta_esq']['nome'][:8] if escalacao['ponta_esq'] else '-----'}                    {escalacao['ponta_dir']['nome'][:8] if escalacao['ponta_dir'] else '-----'}
+    ({escalacao['ponta_esq']['habilidade']}%)                  ({escalacao['ponta_dir']['habilidade']}%)
+
+         {escalacao['atacante1']['nome'][:8] if escalacao['atacante1'] else '-----'}    {escalacao['atacante2']['nome'][:8] if escalacao['atacante2'] else '-----'}
+         ({escalacao['atacante1']['habilidade']}%)  ({escalacao['atacante2']['habilidade']}%)
+```
+        """
+        
+        embed.add_field(name="🏟️ Formação Tática", value=formacao, inline=False)
+        
+        # Calcula força do time
+        forca_total = sum(j['habilidade'] for j in jogadores_escalados) / len(jogadores_escalados)
+        embed.add_field(name="💪 Força do Time", value=f"{forca_total:.1f}%", inline=True)
+        embed.add_field(name="👥 Jogadores Escalados", value=f"{len(jogadores_escalados)}/11", inline=True)
+        
+        # Status da escalação
+        if len(jogadores_escalados) == 11:
+            embed.add_field(name="✅ Status", value="Time Completo!", inline=True)
+        else:
+            embed.add_field(name="⚠️ Status", value="Time Incompleto", inline=True)
+    
+    # Estatísticas do jogador
+    embed.add_field(
+        name="📊 Estatísticas", 
+        value=f"🏆 {user_data['vitorias']}V | ❌ {user_data['derrotas']}D | 🤝 {user_data['empates']}E",
+        inline=False
+    )
+    
+    embed.set_thumbnail(url=usuario.avatar.url if usuario.avatar else None)
+    embed.set_footer(text=f"💰 Dinheiro: ${user_data['dinheiro']:,}")
     
     await ctx.send(embed=embed)
 
-# Comando olheiro
-@bot.command(name='olheiro')
-async def olheiro(ctx):
-    """Veja jogadores disponíveis para contratação"""
+# Comando criar jogador (limitado a 1 por pessoa)
+@bot.command(name='criar_jogador')
+async def criar_jogador(ctx, nome: str, posicao: str):
+    """Cria um jogador personalizado (apenas 1 por pessoa)"""
     user_data = vados.get_user_data(ctx.author.id)
     
-    # Chance de aparecer jogadores baseada na habilidade (mais difícil = menos chance)
-    jogadores_disponiveis = []
-    for jogador in JOGADORES_OLHEIRO:
-        chance = 100 - (jogador['habilidade'] - 50)  # Jogadores melhores têm menos chance
-        if random.randint(1, 100) <= chance:
-            jogadores_disponiveis.append(jogador)
-    
-    if not jogadores_disponiveis:
+    if user_data['jogadores_criados'] >= 1:
         embed = discord.Embed(
-            title="🔍 Olheiro",
-            description="Nenhum jogador disponível no momento. Tente novamente!",
-            color=0xff9900
+            title="❌ Limite Atingido",
+            description="Você já criou seu jogador personalizado!\nCada jogador pode criar apenas 1 jogador.",
+            color=0xff0000
         )
         await ctx.send(embed=embed)
         return
     
-    # Limita a 5 jogadores por vez
-    jogadores_disponiveis = random.sample(jogadores_disponiveis, min(5, len(jogadores_disponiveis)))
+    # Jogador começa com over 50 e evolui
+    over_inicial = 50
+    habilidade_inicial = over_inicial + random.randint(0, 5)
+    
+    jogador = {
+        'nome': nome,
+        'posicao': posicao,
+        'habilidade': habilidade_inicial,
+        'over': over_inicial,
+        'tipo': 'criado',
+        'evolucoes': 0
+    }
+    
+    user_data['jogadores'].append(jogador)
+    user_data['jogadores_criados'] += 1
+    await vados.save_data()
     
     embed = discord.Embed(
-        title="🔍 Olheiro - Jogadores Disponíveis",
-        description="Escolha um jogador para ver as opções de contratação",
-        color=0x0099ff
+        title="✨ Jogador Criado com Sucesso!",
+        description=f"🎉 **{nome}** foi adicionado ao seu elenco!",
+        color=0x00ff00
+    )
+    embed.add_field(name="⚽ Posição", value=posicao, inline=True)
+    embed.add_field(name="📈 Over Inicial", value=over_inicial, inline=True)
+    embed.add_field(name="🎯 Habilidade", value=f"{habilidade_inicial}%", inline=True)
+    embed.add_field(name="💡 Dica", value="Seu jogador evoluirá conforme o over aumenta!", inline=False)
+    embed.set_footer(text="🌟 Jogador personalizado - Único e exclusivo!")
+    
+    await ctx.send(embed=embed)
+
+# Comando olheiro melhorado
+@bot.command(name='olheiro')
+async def olheiro(ctx):
+    """Descubra um jogador disponível no mercado"""
+    user_data = vados.get_user_data(ctx.author.id)
+    
+    # Seleciona UM jogador aleatório baseado na raridade
+    chances = []
+    for jogador in JOGADORES_OLHEIRO:
+        # Quanto maior a habilidade, menor a chance
+        chance = max(5, 105 - jogador['habilidade'])
+        chances.extend([jogador] * chance)
+    
+    jogador_encontrado = random.choice(chances)
+    
+    # Determina raridade baseada na habilidade
+    if jogador_encontrado['habilidade'] >= 95:
+        raridade = "🌟 LENDÁRIO"
+        cor = 0xffd700
+    elif jogador_encontrado['habilidade'] >= 90:
+        raridade = "💎 ÉPICO"
+        cor = 0x9932cc
+    elif jogador_encontrado['habilidade'] >= 80:
+        raridade = "🔵 RARO"
+        cor = 0x0099ff
+    else:
+        raridade = "⚪ COMUM"
+        cor = 0x808080
+    
+    embed = discord.Embed(
+        title="🔍 Relatório do Olheiro",
+        description=f"**{raridade}** jogador foi encontrado!",
+        color=cor
     )
     
-    for i, jogador in enumerate(jogadores_disponiveis, 1):
-        embed.add_field(
-            name=f"{i}. {jogador['nome']}",
-            value=f"**Posição:** {jogador['posicao']}\n**Over:** {jogador['over']}\n**Habilidade:** {jogador['habilidade']}%",
-            inline=True
-        )
+    embed.add_field(name="👤 Nome", value=f"**{jogador_encontrado['nome']}**", inline=True)
+    embed.add_field(name="⚽ Posição", value=jogador_encontrado['posicao'], inline=True)
+    embed.add_field(name="📊 Over", value=jogador_encontrado['over'], inline=True)
+    embed.add_field(name="🎯 Habilidade", value=f"{jogador_encontrado['habilidade']}%", inline=True)
+    embed.add_field(name="💰 Valor de Mercado", value=f"${jogador_encontrado['valor_mercado']:,}", inline=True)
+    embed.add_field(name="💳 Seu Dinheiro", value=f"${user_data['dinheiro']:,}", inline=True)
     
-    view = OlheiroView(jogadores_disponiveis, user_data, vados)
+    # Adiciona informações extras baseadas na habilidade
+    if jogador_encontrado['habilidade'] >= 90:
+        embed.add_field(name="📝 Análise", value="⭐ Jogador de elite! Investimento garantido.", inline=False)
+    elif jogador_encontrado['habilidade'] >= 80:
+        embed.add_field(name="📝 Análise", value="🎯 Bom jogador, pode fazer a diferença no time.", inline=False)
+    else:
+        embed.add_field(name="📝 Análise", value="💪 Jogador promissor para começar.", inline=False)
+    
+    embed.set_footer(text="💡 Use os botões abaixo para negociar!")
+    
+    view = OlheiroView(jogador_encontrado, user_data, vados)
     await ctx.send(embed=embed, view=view)
 
 class OlheiroView(discord.ui.View):
-    def __init__(self, jogadores, user_data, vados_instance):
-        super().__init__(timeout=300)
-        self.jogadores = jogadores
-        self.user_data = user_data
-        self.vados = vados_instance
-        
-        for i, jogador in enumerate(jogadores):
-            button = discord.ui.Button(
-                label=f"{i+1}. {jogador['nome'][:15]}",
-                style=discord.ButtonStyle.primary,
-                custom_id=f"jogador_{i}"
-            )
-            button.callback = self.create_callback(i)
-            self.add_item(button)
-    
-    def create_callback(self, index):
-        async def callback(interaction):
-            jogador = self.jogadores[index]
-            embed = discord.Embed(
-                title=f"⚽ {jogador['nome']}",
-                description=f"**Posição:** {jogador['posicao']}\n**Over:** {jogador['over']}\n**Habilidade:** {jogador['habilidade']}%",
-                color=0x0099ff
-            )
-            
-            preco_compra = jogador['preco']
-            preco_emprestimo = preco_compra // 4
-            
-            embed.add_field(name="💰 Comprar", value=f"${preco_compra:,}", inline=True)
-            embed.add_field(name="🤝 Emprestar (1 partida)", value=f"${preco_emprestimo:,}", inline=True)
-            embed.add_field(name="💳 Seu dinheiro", value=f"${self.user_data['dinheiro']:,}", inline=True)
-            
-            view = ContratacaoView(jogador, self.user_data, self.vados)
-            await interaction.response.edit_message(embed=embed, view=view)
-        
-        return callback
-
-class ContratacaoView(discord.ui.View):
     def __init__(self, jogador, user_data, vados_instance):
         super().__init__(timeout=300)
         self.jogador = jogador
         self.user_data = user_data
         self.vados = vados_instance
     
-    @discord.ui.button(label="💰 Comprar", style=discord.ButtonStyle.success)
+    @discord.ui.button(label="💰 Comprar Jogador", style=discord.ButtonStyle.success, emoji="💰")
     async def comprar(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if self.user_data['dinheiro'] >= self.jogador['preco']:
-            self.user_data['dinheiro'] -= self.jogador['preco']
+        if self.user_data['dinheiro'] >= self.jogador['valor_mercado']:
+            self.user_data['dinheiro'] -= self.jogador['valor_mercado']
             novo_jogador = {
                 'nome': self.jogador['nome'],
                 'posicao': self.jogador['posicao'],
@@ -260,30 +335,31 @@ class ContratacaoView(discord.ui.View):
             await self.vados.save_data()
             
             embed = discord.Embed(
-                title="✅ Compra Realizada!",
-                description=f"**{self.jogador['nome']}** foi contratado com sucesso!",
+                title="🎉 Transferência Concluída!",
+                description=f"✅ **{self.jogador['nome']}** foi contratado com sucesso!",
                 color=0x00ff00
             )
-            embed.add_field(name="Valor pago", value=f"${self.jogador['preco']:,}", inline=True)
-            embed.add_field(name="Dinheiro restante", value=f"${self.user_data['dinheiro']:,}", inline=True)
+            embed.add_field(name="💸 Valor Pago", value=f"${self.jogador['valor_mercado']:,}", inline=True)
+            embed.add_field(name="💰 Dinheiro Restante", value=f"${self.user_data['dinheiro']:,}", inline=True)
+            embed.set_footer(text="🌟 Jogador adicionado ao seu elenco!")
             
             await interaction.response.edit_message(embed=embed, view=None)
         else:
             embed = discord.Embed(
-                title="❌ Dinheiro Insuficiente",
-                description=f"Você precisa de ${self.jogador['preco']:,} mas possui apenas ${self.user_data['dinheiro']:,}",
+                title="💸 Fundos Insuficientes",
+                description=f"❌ Você precisa de **${self.jogador['valor_mercado']:,}**\n💰 Você possui: **${self.user_data['dinheiro']:,}**",
                 color=0xff0000
             )
+            embed.add_field(name="💡 Dica", value="Participe de mais confrontos para ganhar dinheiro!", inline=False)
             await interaction.response.edit_message(embed=embed, view=self)
     
-    @discord.ui.button(label="🤝 Emprestar", style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="🤝 Empréstimo (1 jogo)", style=discord.ButtonStyle.secondary, emoji="🤝")
     async def emprestar(self, interaction: discord.Interaction, button: discord.ui.Button):
-        preco_emprestimo = self.jogador['preco'] // 4
+        preco_emprestimo = self.jogador['valor_mercado'] // 4
         
         if self.user_data['dinheiro'] >= preco_emprestimo:
             self.user_data['dinheiro'] -= preco_emprestimo
             
-            # Adiciona ao empréstimo temporário
             user_id = str(interaction.user.id)
             if user_id not in self.vados.emprestimos:
                 self.vados.emprestimos[user_id] = []
@@ -300,44 +376,44 @@ class ContratacaoView(discord.ui.View):
             await self.vados.save_data()
             
             embed = discord.Embed(
-                title="✅ Empréstimo Realizado!",
-                description=f"**{self.jogador['nome']}** foi emprestado por 1 partida!",
+                title="🤝 Empréstimo Acordado!",
+                description=f"✅ **{self.jogador['nome']}** foi emprestado por 1 partida!",
                 color=0x00ff00
             )
-            embed.add_field(name="Valor pago", value=f"${preco_emprestimo:,}", inline=True)
-            embed.add_field(name="Dinheiro restante", value=f"${self.user_data['dinheiro']:,}", inline=True)
+            embed.add_field(name="💸 Valor do Empréstimo", value=f"${preco_emprestimo:,}", inline=True)
+            embed.add_field(name="💰 Dinheiro Restante", value=f"${self.user_data['dinheiro']:,}", inline=True)
+            embed.set_footer(text="⚠️ Jogador retornará após 1 partida!")
             
             await interaction.response.edit_message(embed=embed, view=None)
         else:
             embed = discord.Embed(
-                title="❌ Dinheiro Insuficiente",
-                description=f"Você precisa de ${preco_emprestimo:,} mas possui apenas ${self.user_data['dinheiro']:,}",
+                title="💸 Fundos Insuficientes",
+                description=f"❌ Você precisa de **${preco_emprestimo:,}** para o empréstimo\n💰 Você possui: **${self.user_data['dinheiro']:,}**",
                 color=0xff0000
             )
             await interaction.response.edit_message(embed=embed, view=self)
 
-# Comando para ver elenco
+# Comando elenco melhorado
 @bot.command(name='elenco')
-async def elenco(ctx):
-    """Veja seu elenco atual"""
-    user_data = vados.get_user_data(ctx.author.id)
+async def elenco(ctx, usuario: discord.Member = None):
+    """Visualiza o elenco completo de um jogador"""
+    if usuario is None:
+        usuario = ctx.author
     
-    if not user_data['jogadores']:
-        embed = discord.Embed(
-            title="📋 Seu Elenco",
-            description="Você ainda não possui jogadores. Use `-olheiro` ou `-criar_jogador` para começar!",
-            color=0xff9900
-        )
-        await ctx.send(embed=embed)
-        return
+    user_data = vados.get_user_data(usuario.id)
     
     embed = discord.Embed(
-        title="📋 Seu Elenco",
-        description=f"💰 Dinheiro: ${user_data['dinheiro']:,}",
+        title=f"📋 Elenco de {usuario.display_name}",
         color=0x0099ff
     )
     
-    # Agrupa jogadores por posição
+    if not user_data['jogadores']:
+        embed.description = "❌ Elenco vazio!\n💡 Use `-olheiro` para contratar jogadores ou `-criar_jogador` para criar um."
+        embed.color = 0xff9900
+        await ctx.send(embed=embed)
+        return
+    
+    # Agrupa por posição
     posicoes = {}
     for jogador in user_data['jogadores']:
         pos = jogador['posicao']
@@ -345,23 +421,25 @@ async def elenco(ctx):
             posicoes[pos] = []
         posicoes[pos].append(jogador)
     
+    # Adiciona jogadores por posição
     for posicao, jogadores in posicoes.items():
         jogadores_texto = []
         for jogador in jogadores:
-            jogadores_texto.append(f"**{jogador['nome']}** - {jogador['habilidade']}% (Over: {jogador['over']})")
+            emoji = "⭐" if jogador['tipo'] == 'criado' else "💰"
+            jogadores_texto.append(f"{emoji} **{jogador['nome']}** - {jogador['habilidade']}% (Over: {jogador['over']})")
         
         embed.add_field(
-            name=f"⚽ {posicao}",
+            name=f"⚽ {posicao} ({len(jogadores)})",
             value="\n".join(jogadores_texto),
             inline=False
         )
     
-    # Adiciona jogadores emprestados se houver
-    user_id = str(ctx.author.id)
+    # Jogadores emprestados
+    user_id = str(usuario.id)
     if user_id in vados.emprestimos and vados.emprestimos[user_id]:
         emprestados_texto = []
         for emp in vados.emprestimos[user_id]:
-            emprestados_texto.append(f"**{emp['nome']}** - {emp['habilidade']}% ({emp['partidas_restantes']} partida restante)")
+            emprestados_texto.append(f"🤝 **{emp['nome']}** - {emp['habilidade']}% ({emp['partidas_restantes']} jogo restante)")
         
         embed.add_field(
             name="🤝 Emprestados",
@@ -369,322 +447,206 @@ async def elenco(ctx):
             inline=False
         )
     
+    # Estatísticas do elenco
+    total_jogadores = len(user_data['jogadores'])
+    media_habilidade = sum(j['habilidade'] for j in user_data['jogadores']) / total_jogadores
+    
+    embed.add_field(name="👥 Total de Jogadores", value=total_jogadores, inline=True)
+    embed.add_field(name="📊 Média de Habilidade", value=f"{media_habilidade:.1f}%", inline=True)
+    embed.add_field(name="💰 Patrimônio", value=f"${user_data['dinheiro']:,}", inline=True)
+    
+    embed.set_thumbnail(url=usuario.avatar.url if usuario.avatar else None)
+    embed.set_footer(text="⭐ = Criado | 💰 = Comprado | 🤝 = Emprestado")
+    
     await ctx.send(embed=embed)
 
-# Comando para escalar time
+# Comando escalar com Select Menu
 @bot.command(name='escalar')
 async def escalar(ctx):
-    """Interface para escalar seu time"""
+    """Interface moderna para escalar seu time"""
     user_data = vados.get_user_data(ctx.author.id)
     
     if not user_data['jogadores']:
         embed = discord.Embed(
-            title="❌ Sem Jogadores",
-            description="Você precisa ter jogadores para escalar! Use `-olheiro` ou `-criar_jogador`",
+            title="❌ Elenco Vazio",
+            description="Você precisa ter jogadores para escalar!\n💡 Use `-olheiro` ou `-criar_jogador` primeiro.",
             color=0xff0000
         )
         await ctx.send(embed=embed)
         return
     
-    view = EscalacaoView(user_data, vados)
-    embed = view.get_escalacao_embed()
+    embed = discord.Embed(
+        title="⚽ Central de Escalação",
+        description="Escolha uma posição para escalar um jogador:",
+        color=0x0099ff
+    )
+    
+    # Mostra escalação atual
+    escalacao_atual = ""
+    for pos, jogador in user_data['escalacao'].items():
+        if jogador:
+            escalacao_atual += f"✅ **{pos.replace('_', ' ').title()}**: {jogador['nome']} ({jogador['habilidade']}%)\n"
+        else:
+            escalacao_atual += f"❌ **{pos.replace('_', ' ').title()}**: *Vago*\n"
+    
+    embed.add_field(name="📋 Escalação Atual", value=escalacao_atual, inline=False)
+    
+    view = EscalacaoSelectView(user_data, vados)
     await ctx.send(embed=embed, view=view)
 
-class EscalacaoView(discord.ui.View):
+class EscalacaoSelectView(discord.ui.View):
     def __init__(self, user_data, vados_instance):
         super().__init__(timeout=300)
         self.user_data = user_data
         self.vados = vados_instance
         
-        posicoes = [
-            ("Goleiro", "goleiro"),
-            ("Zagueiro 1", "zagueiro1"),
-            ("Zagueiro 2", "zagueiro2"),
-            ("Lateral Esq", "lateral_esq"),
-            ("Lateral Dir", "lateral_dir"),
-            ("Volante", "volante"),
-            ("Meia", "meia"),
-            ("Ponta Esq", "ponta_esq"),
-            ("Ponta Dir", "ponta_dir"),
-            ("Atacante 1", "atacante1"),
-            ("Atacante 2", "atacante2")
+        # Select para posições
+        self.add_item(PosicaoSelect(user_data, vados_instance))
+
+class PosicaoSelect(discord.ui.Select):
+    def __init__(self, user_data, vados_instance):
+        self.user_data = user_data
+        self.vados = vados_instance
+        
+        options = [
+            discord.SelectOption(label="🥅 Goleiro", value="goleiro", emoji="🥅"),
+            discord.SelectOption(label="🛡️ Zagueiro 1", value="zagueiro1", emoji="🛡️"),
+            discord.SelectOption(label="🛡️ Zagueiro 2", value="zagueiro2", emoji="🛡️"),
+            discord.SelectOption(label="◀️ Lateral Esquerdo", value="lateral_esq", emoji="◀️"),
+            discord.SelectOption(label="▶️ Lateral Direito", value="lateral_dir", emoji="▶️"),
+            discord.SelectOption(label="⚙️ Volante", value="volante", emoji="⚙️"),
+            discord.SelectOption(label="🎯 Meia", value="meia", emoji="🎯"),
+            discord.SelectOption(label="◀️ Ponta Esquerda", value="ponta_esq", emoji="◀️"),
+            discord.SelectOption(label="▶️ Ponta Direita", value="ponta_dir", emoji="▶️"),
+            discord.SelectOption(label="⚽ Atacante 1", value="atacante1", emoji="⚽"),
+            discord.SelectOption(label="⚽ Atacante 2", value="atacante2", emoji="⚽"),
         ]
         
-        for nome, key in posicoes[:5]:  # Primeira linha de botões
-            button = discord.ui.Button(label=nome, style=discord.ButtonStyle.secondary)
-            button.callback = self.create_escalacao_callback(key, nome)
-            self.add_item(button)
+        super().__init__(placeholder="Escolha uma posição para escalar...", options=options)
     
-    def create_escalacao_callback(self, posicao_key, posicao_nome):
-        async def callback(interaction):
-            view = JogadorSelectView(self.user_data, self.vados, posicao_key, posicao_nome, self)
-            embed = discord.Embed(
-                title=f"Escolha um jogador para {posicao_nome}",
-                description="Selecione um jogador do seu elenco:",
-                color=0x0099ff
-            )
-            await interaction.response.edit_message(embed=embed, view=view)
-        return callback
-    
-    def get_escalacao_embed(self):
+    async def callback(self, interaction: discord.Interaction):
+        posicao = self.values[0]
+        
+        # Cria select para jogadores
+        view = JogadorSelectView(self.user_data, self.vados, posicao)
+        
         embed = discord.Embed(
-            title="⚽ Escalação do Time",
-            description="Clique nas posições para escalar jogadores",
+            title=f"⚽ Escalando {posicao.replace('_', ' ').title()}",
+            description="Escolha um jogador do seu elenco:",
             color=0x0099ff
         )
         
-        formacao = """
-```
-        {goleiro}
-    
-{lateral_esq}  {zagueiro1}  {zagueiro2}  {lateral_dir}
-
-      {volante}    {meia}
-
-{ponta_esq}              {ponta_dir}
-
-   {atacante1}  {atacante2}
-```
-        """
-        
-        escalacao = self.user_data['escalacao']
-        jogadores_escalados = {}
-        
-        for pos, jogador in escalacao.items():
-            if jogador:
-                nome = jogador['nome'][:8]  # Limita o nome
-                jogadores_escalados[pos] = nome
-            else:
-                jogadores_escalados[pos] = "-----"
-        
-        embed.add_field(
-            name="📋 Formação Atual",
-            value=formacao.format(**jogadores_escalados),
-            inline=False
-        )
-        
-        return embed
+        await interaction.response.edit_message(embed=embed, view=view)
 
 class JogadorSelectView(discord.ui.View):
-    def __init__(self, user_data, vados_instance, posicao_key, posicao_nome, parent_view):
+    def __init__(self, user_data, vados_instance, posicao):
         super().__init__(timeout=300)
         self.user_data = user_data
         self.vados = vados_instance
-        self.posicao_key = posicao_key
-        self.posicao_nome = posicao_nome
-        self.parent_view = parent_view
+        self.posicao = posicao
         
-        # Adiciona jogadores próprios
-        for i, jogador in enumerate(user_data['jogadores'][:20]):  # Máximo 20 jogadores
-            button = discord.ui.Button(
-                label=f"{jogador['nome'][:15]} - {jogador['habilidade']}%",
-                style=discord.ButtonStyle.primary
-            )
-            button.callback = self.create_select_callback(jogador)
-            self.add_item(button)
-        
-        # Adiciona jogadores emprestados
-        user_id = str(list(user_data.keys())[0] if user_data else "unknown")  # Gambiarra para pegar o user_id
-        if hasattr(self.vados, 'emprestimos') and user_id in self.vados.emprestimos:
-            for jogador in self.vados.emprestimos[user_id]:
-                button = discord.ui.Button(
-                    label=f"{jogador['nome'][:15]} (EMP) - {jogador['habilidade']}%",
-                    style=discord.ButtonStyle.success
-                )
-                button.callback = self.create_select_callback(jogador)
-                self.add_item(button)
+        # Select para jogadores
+        self.add_item(JogadorSelect(user_data, vados_instance, posicao))
         
         # Botão voltar
         voltar_btn = discord.ui.Button(label="← Voltar", style=discord.ButtonStyle.secondary)
         voltar_btn.callback = self.voltar
         self.add_item(voltar_btn)
     
-    def create_select_callback(self, jogador):
-        async def callback(interaction):
-            self.user_data['escalacao'][self.posicao_key] = jogador
+    async def voltar(self, interaction: discord.Interaction):
+        embed = discord.Embed(
+            title="⚽ Central de Escalação",
+            description="Escolha uma posição para escalar um jogador:",
+            color=0x0099ff
+        )
+        
+        view = EscalacaoSelectView(self.user_data, self.vados)
+        await interaction.response.edit_message(embed=embed, view=view)
+
+class JogadorSelect(discord.ui.Select):
+    def __init__(self, user_data, vados_instance, posicao):
+        self.user_data = user_data
+        self.vados = vados_instance
+        self.posicao = posicao
+        
+        options = []
+        
+        # Adiciona jogadores próprios
+        for jogador in user_data['jogadores'][:20]:  # Máximo 20
+            emoji = "⭐" if jogador['tipo'] == 'criado' else "💰"
+            options.append(discord.SelectOption(
+                label=f"{jogador['nome']} - {jogador['habilidade']}%",
+                value=f"proprio_{jogador['nome']}",
+                emoji=emoji,
+                description=f"{jogador['posicao']} | Over: {jogador['over']}"
+            ))
+        
+        # Adiciona jogadores emprestados
+        user_id = str(list(user_data.keys())[0] if isinstance(user_data, dict) and user_data else "unknown")
+        if hasattr(vados_instance, 'emprestimos') and user_id in vados_instance.emprestimos:
+            for jogador in vados_instance.emprestimos[user_id]:
+                options.append(discord.SelectOption(
+                    label=f"{jogador['nome']} (EMP) - {jogador['habilidade']}%",
+                    value=f"emprestado_{jogador['nome']}",
+                    emoji="🤝",
+                    description=f"{jogador['posicao']} | {jogador['partidas_restantes']} jogo restante"
+                ))
+        
+        if not options:
+            options.append(discord.SelectOption(label="Nenhum jogador disponível", value="vazio"))
+        
+        super().__init__(placeholder="Escolha um jogador...", options=options[:25])  # Discord limit
+    
+    async def callback(self, interaction: discord.Interaction):
+        if self.values[0] == "vazio":
+            await interaction.response.send_message("❌ Nenhum jogador disponível!", ephemeral=True)
+            return
+        
+        tipo, nome = self.values[0].split("_", 1)
+        
+        # Encontra o jogador
+        jogador_escalado = None
+        if tipo == "proprio":
+            for jogador in self.user_data['jogadores']:
+                if jogador['nome'] == nome:
+                    jogador_escalado = jogador
+                    break
+        elif tipo == "emprestado":
+            user_id = str(interaction.user.id)
+            if user_id in self.vados.emprestimos:
+                for jogador in self.vados.emprestimos[user_id]:
+                    if jogador['nome'] == nome:
+                        jogador_escalado = jogador
+                        break
+        
+        if jogador_escalado:
+            self.user_data['escalacao'][self.posicao] = jogador_escalado
             await self.vados.save_data()
             
-            embed = self.parent_view.get_escalacao_embed()
-            embed.description = f"✅ {jogador['nome']} foi escalado para {self.posicao_nome}!"
-            
-            await interaction.response.edit_message(embed=embed, view=self.parent_view)
-        return callback
-    
-    async def voltar(self, interaction):
-        embed = self.parent_view.get_escalacao_embed()
-        await interaction.response.edit_message(embed=embed, view=self.parent_view)
-
-# Comando para confronto
-@bot.command(name='confronto')
-async def confronto(ctx, oponente: discord.Member):
-    """Desafie outro usuário para um confronto"""
-    if oponente.id == ctx.author.id:
-        await ctx.send("❌ Você não pode desafiar a si mesmo!")
-        return
-    
-    user_data = vados.get_user_data(ctx.author.id)
-    oponente_data = vados.get_user_data(oponente.id)
-    
-    # Verifica se ambos têm escalação completa
-    escalacao_completa = all(pos for pos in user_data['escalacao'].values())
-    oponente_escalacao_completa = all(pos for pos in oponente_data['escalacao'].values())
-    
-    if not escalacao_completa:
-        await ctx.send("❌ Você precisa ter uma escalação completa! Use `-escalar`")
-        return
-    
-    if not oponente_escalacao_completa:
-        await ctx.send(f"❌ {oponente.mention} precisa ter uma escalação completa!")
-        return
-    
-    embed = discord.Embed(
-        title="⚔️ Desafio de Confronto",
-        description=f"{ctx.author.mention} desafiou {oponente.mention} para um confronto!",
-        color=0xff9900
-    )
-    
-    view = ConfrontoView(ctx.author, oponente, user_data, oponente_data, vados)
-    await ctx.send(embed=embed, view=view)
-
-class ConfrontoView(discord.ui.View):
-    def __init__(self, desafiante, oponente, desafiante_data, oponente_data, vados_instance):
-        super().__init__(timeout=300)
-        self.desafiante = desafiante
-        self.oponente = oponente
-        self.desafiante_data = desafiante_data
-        self.oponente_data = oponente_data
-        self.vados = vados_instance
-    
-    @discord.ui.button(label="✅ Aceitar", style=discord.ButtonStyle.success)
-    async def aceitar(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if interaction.user.id != self.oponente.id:
-            await interaction.response.send_message("❌ Apenas o desafiado pode aceitar!", ephemeral=True)
-            return
-        
-        resultado = self.simular_partida()
-        embed = self.criar_embed_resultado(resultado)
-        
-        # Atualiza estatísticas
-        if resultado['vencedor'] == 'desafiante':
-            self.desafiante_data['vitorias'] += 1
-            self.oponente_data['derrotas'] += 1
-        elif resultado['vencedor'] == 'oponente':
-            self.oponente_data['vitorias'] += 1
-            self.desafiante_data['derrotas'] += 1
-        else:
-            self.desafiante_data['empates'] += 1
-            self.oponente_data['empates'] += 1
-        
-        # Remove jogadores emprestados após a partida
-        self.remover_emprestados(str(self.desafiante.id))
-        self.remover_emprestados(str(self.oponente.id))
-        
-        await self.vados.save_data()
-        await interaction.response.edit_message(embed=embed, view=None)
-    
-    @discord.ui.button(label="❌ Recusar", style=discord.ButtonStyle.danger)
-    async def recusar(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if interaction.user.id != self.oponente.id:
-            await interaction.response.send_message("❌ Apenas o desafiado pode recusar!", ephemeral=True)
-            return
-        
-        embed = discord.Embed(
-            title="❌ Confronto Recusado",
-            description=f"{self.oponente.mention} recusou o desafio.",
-            color=0xff0000
-        )
-        await interaction.response.edit_message(embed=embed, view=None)
-    
-    def calcular_forca_time(self, escalacao):
-        forca_total = 0
-        for jogador in escalacao.values():
-            if jogador:
-                forca_total += jogador['habilidade']
-        return forca_total / 11  # Média da habilidade
-    
-    def simular_partida(self):
-        forca_desafiante = self.calcular_forca_time(self.desafiante_data['escalacao'])
-        forca_oponente = self.calcular_forca_time(self.oponente_data['escalacao'])
-        
-        # Adiciona elemento aleatório
-        forca_desafiante += random.randint(-10, 10)
-        forca_oponente += random.randint(-10, 10)
-        
-        # Simula gols baseado na força
-        gols_desafiante = max(0, int((forca_desafiante / 100) * random.randint(0, 4)))
-        gols_oponente = max(0, int((forca_oponente / 100) * random.randint(0, 4)))
-        
-        # Determina vencedor
-        if gols_desafiante > gols_oponente:
-            vencedor = 'desafiante'
-        elif gols_oponente > gols_desafiante:
-            vencedor = 'oponente'
-        else:
-            vencedor = 'empate'
-        
-        # Se empate, vai para pênaltis
-        penaltis = None
-        if vencedor == 'empate':
-            penaltis_desafiante = random.randint(0, 5)
-            penaltis_oponente = random.randint(0, 5)
-            
-            if penaltis_desafiante > penaltis_oponente:
-                vencedor = 'desafiante'
-            elif penaltis_oponente > penaltis_desafiante:
-                vencedor = 'oponente'
-            
-            penaltis = (penaltis_desafiante, penaltis_oponente)
-        
-        return {
-            'gols': (gols_desafiante, gols_oponente),
-            'vencedor': vencedor,
-            'penaltis': penaltis,
-            'forca': (forca_desafiante, forca_oponente)
-        }
-    
-    def criar_embed_resultado(self, resultado):
-        embed = discord.Embed(
-            title="⚽ Resultado da Partida",
-            color=0x00ff00
-        )
-        
-        gols_desafiante, gols_oponente = resultado['gols']
-        
-        placar = f"{self.desafiante.display_name} {gols_desafiante} x {gols_oponente} {self.oponente.display_name}"
-        embed.add_field(name="📊 Placar", value=placar, inline=False)
-        
-        if resultado['penaltis']:
-            pen_desafiante, pen_oponente = resultado['penaltis']
-            embed.add_field(
-                name="🥅 Pênaltis",
-                value=f"{self.desafiante.display_name} {pen_desafiante} x {pen_oponente} {self.oponente.display_name}",
-                inline=False
+            embed = discord.Embed(
+                title="✅ Jogador Escalado!",
+                description=f"**{jogador_escalado['nome']}** foi escalado para **{self.posicao.replace('_', ' ').title()}**!",
+                color=0x00ff00
             )
-        
-        if resultado['vencedor'] == 'desafiante':
-            embed.add_field(name="🏆 Vencedor", value=self.desafiante.mention, inline=False)
-        elif resultado['vencedor'] == 'oponente':
-            embed.add_field(name="🏆 Vencedor", value=self.oponente.mention, inline=False)
-        else:
-            embed.add_field(name="🤝 Resultado", value="Empate!", inline=False)
-        
-        return embed
-    
-    def remover_emprestados(self, user_id):
-        if user_id in self.vados.emprestimos:
-            emprestimos = self.vados.emprestimos[user_id][:]
-            for i, emp in enumerate(emprestimos):
-                emp['partidas_restantes'] -= 1
-                if emp['partidas_restantes'] <= 0:
-                    self.vados.emprestimos[user_id].pop(i)
+            embed.add_field(name="⚽ Jogador", value=jogador_escalado['nome'], inline=True)
+            embed.add_field(name="📍 Posição", value=jogador_escalado['posicao'], inline=True)
+            embed.add_field(name="🎯 Habilidade", value=f"{jogador_escalado['habilidade']}%", inline=True)
             
-            if not self.vados.emprestimos[user_id]:
-                del self.vados.emprestimos[user_id]
+            await interaction.response.edit_message(embed=embed, view=None)
 
-# Comando para criar liga
+# Comando criar liga (apenas owner)
 @bot.command(name='criar_liga')
 async def criar_liga(ctx, *, nome_liga):
-    """Cria uma nova liga"""
+    """Cria uma nova liga (apenas owner)"""
+    if ctx.author.id != OWNER_ID:
+        embed = discord.Embed(
+            title="🚫 Acesso Negado",
+            description="Apenas o owner do bot pode criar ligas!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
+    
     liga_id = len(vados.ligas) + 1
     vados.ligas[liga_id] = {
         'nome': nome_liga,
@@ -701,38 +663,251 @@ async def criar_liga(ctx, *, nome_liga):
         description=f"Liga **{nome_liga}** foi criada com sucesso!",
         color=0x00ff00
     )
-    embed.add_field(name="ID da Liga", value=liga_id, inline=True)
-    embed.add_field(name="Criador", value=ctx.author.mention, inline=True)
+    embed.add_field(name="🆔 ID da Liga", value=liga_id, inline=True)
+    embed.add_field(name="👑 Criador", value=ctx.author.mention, inline=True)
+    embed.set_footer(text="💡 Outros jogadores podem usar -entrar_liga para participar!")
     
     await ctx.send(embed=embed)
 
-# Comando para entrar em liga
+# Comando entrar liga
 @bot.command(name='entrar_liga')
 async def entrar_liga(ctx, liga_id: int):
     """Entra em uma liga existente"""
     if liga_id not in vados.ligas:
-        await ctx.send("❌ Liga não encontrada!")
+        embed = discord.Embed(
+            title="❌ Liga Não Encontrada",
+            description=f"Não existe liga com ID **{liga_id}**!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
         return
     
     if ctx.author.id in vados.ligas[liga_id]['participantes']:
-        await ctx.send("❌ Você já está nesta liga!")
+        embed = discord.Embed(
+            title="⚠️ Já Participando",
+            description="Você já está nesta liga!",
+            color=0xff9900
+        )
+        await ctx.send(embed=embed)
         return
     
     vados.ligas[liga_id]['participantes'].append(ctx.author.id)
     await vados.save_data()
     
     embed = discord.Embed(
-        title="✅ Entrada na Liga",
+        title="✅ Entrada Confirmada!",
         description=f"Você entrou na liga **{vados.ligas[liga_id]['nome']}**!",
         color=0x00ff00
     )
+    embed.add_field(name="🏆 Liga", value=vados.ligas[liga_id]['nome'], inline=True)
+    embed.add_field(name="👥 Participantes", value=len(vados.ligas[liga_id]['participantes']), inline=True)
     
     await ctx.send(embed=embed)
 
-# Comando para ver estatísticas
+# Comando confronto melhorado
+@bot.command(name='confronto')
+async def confronto(ctx, oponente: discord.Member):
+    """Desafie outro usuário para um confronto épico"""
+    if oponente.id == ctx.author.id:
+        embed = discord.Embed(
+            title="❌ Autodesafio Impossível",
+            description="Você não pode desafiar a si mesmo!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
+    
+    user_data = vados.get_user_data(ctx.author.id)
+    oponente_data = vados.get_user_data(oponente.id)
+    
+    # Verifica escalações
+    escalacao_completa = all(pos for pos in user_data['escalacao'].values())
+    oponente_escalacao_completa = all(pos for pos in oponente_data['escalacao'].values())
+    
+    if not escalacao_completa:
+        embed = discord.Embed(
+            title="❌ Escalação Incompleta",
+            description="Você precisa ter uma escalação completa!\n💡 Use `-escalar` para montar seu time.",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
+    
+    if not oponente_escalacao_completa:
+        embed = discord.Embed(
+            title="❌ Oponente Sem Escalação",
+            description=f"{oponente.mention} precisa ter uma escalação completa!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
+    
+    embed = discord.Embed(
+        title="⚔️ Desafio de Confronto",
+        description=f"🔥 **{ctx.author.display_name}** desafiou **{oponente.display_name}** para um confronto épico!",
+        color=0xff9900
+    )
+    
+    # Calcula força dos times
+    forca_desafiante = sum(j['habilidade'] for j in user_data['escalacao'].values()) / 11
+    forca_oponente = sum(j['habilidade'] for j in oponente_data['escalacao'].values()) / 11
+    
+    embed.add_field(name=f"💪 {ctx.author.display_name}", value=f"Força: {forca_desafiante:.1f}%", inline=True)
+    embed.add_field(name="🆚", value="**VS**", inline=True)
+    embed.add_field(name=f"💪 {oponente.display_name}", value=f"Força: {forca_oponente:.1f}%", inline=True)
+    
+    embed.set_footer(text="⏰ Oponente tem 5 minutos para responder!")
+    
+    view = ConfrontoView(ctx.author, oponente, user_data, oponente_data, vados)
+    await ctx.send(embed=embed, view=view)
+
+class ConfrontoView(discord.ui.View):
+    def __init__(self, desafiante, oponente, desafiante_data, oponente_data, vados_instance):
+        super().__init__(timeout=300)
+        self.desafiante = desafiante
+        self.oponente = oponente
+        self.desafiante_data = desafiante_data
+        self.oponente_data = oponente_data
+        self.vados = vados_instance
+    
+    @discord.ui.button(label="✅ Aceitar Desafio", style=discord.ButtonStyle.success, emoji="⚔️")
+    async def aceitar(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if interaction.user.id != self.oponente.id:
+            await interaction.response.send_message("❌ Apenas o desafiado pode aceitar!", ephemeral=True)
+            return
+        
+        resultado = self.simular_partida()
+        embed = self.criar_embed_resultado(resultado)
+        
+        # Atualiza estatísticas e dinheiro
+        if resultado['vencedor'] == 'desafiante':
+            self.desafiante_data['vitorias'] += 1
+            self.oponente_data['derrotas'] += 1
+            self.desafiante_data['dinheiro'] += 5000  # Prêmio por vitória
+        elif resultado['vencedor'] == 'oponente':
+            self.oponente_data['vitorias'] += 1
+            self.desafiante_data['derrotas'] += 1
+            self.oponente_data['dinheiro'] += 5000  # Prêmio por vitória
+        else:
+            self.desafiante_data['empates'] += 1
+            self.oponente_data['empates'] += 1
+            self.desafiante_data['dinheiro'] += 2000  # Prêmio menor por empate
+            self.oponente_data['dinheiro'] += 2000
+        
+        # Remove jogadores emprestados
+        self.remover_emprestados(str(self.desafiante.id))
+        self.remover_emprestados(str(self.oponente.id))
+        
+        await self.vados.save_data()
+        await interaction.response.edit_message(embed=embed, view=None)
+    
+    @discord.ui.button(label="❌ Recusar", style=discord.ButtonStyle.danger, emoji="🚫")
+    async def recusar(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if interaction.user.id != self.oponente.id:
+            await interaction.response.send_message("❌ Apenas o desafiado pode recusar!", ephemeral=True)
+            return
+        
+        embed = discord.Embed(
+            title="❌ Confronto Recusado",
+            description=f"**{self.oponente.display_name}** recusou o desafio de **{self.desafiante.display_name}**.",
+            color=0xff0000
+        )
+        embed.set_footer(text="🐔 Que pena! Talvez na próxima...")
+        
+        await interaction.response.edit_message(embed=embed, view=None)
+    
+    def calcular_forca_time(self, escalacao):
+        return sum(j['habilidade'] for j in escalacao.values()) / 11
+    
+    def simular_partida(self):
+        forca_desafiante = self.calcular_forca_time(self.desafiante_data['escalacao'])
+        forca_oponente = self.calcular_forca_time(self.oponente_data['escalacao'])
+        
+        # Adiciona fator sorte
+        forca_desafiante += random.randint(-15, 15)
+        forca_oponente += random.randint(-15, 15)
+        
+        # Simula gols
+        gols_desafiante = max(0, int((forca_desafiante / 100) * random.randint(0, 5)))
+        gols_oponente = max(0, int((forca_oponente / 100) * random.randint(0, 5)))
+        
+        vencedor = 'empate'
+        if gols_desafiante > gols_oponente:
+            vencedor = 'desafiante'
+        elif gols_oponente > gols_desafiante:
+            vencedor = 'oponente'
+        
+        # Pênaltis em caso de empate
+        penaltis = None
+        if vencedor == 'empate':
+            penaltis_desafiante = random.randint(0, 5)
+            penaltis_oponente = random.randint(0, 5)
+            
+            while penaltis_desafiante == penaltis_oponente:
+                penaltis_desafiante = random.randint(0, 5)
+                penaltis_oponente = random.randint(0, 5)
+            
+            if penaltis_desafiante > penaltis_oponente:
+                vencedor = 'desafiante'
+            else:
+                vencedor = 'oponente'
+            
+            penaltis = (penaltis_desafiante, penaltis_oponente)
+        
+        return {
+            'gols': (gols_desafiante, gols_oponente),
+            'vencedor': vencedor,
+            'penaltis': penaltis,
+            'forca': (forca_desafiante, forca_oponente)
+        }
+    
+    def criar_embed_resultado(self, resultado):
+        embed = discord.Embed(
+            title="🏟️ Resultado da Partida",
+            color=0x00ff00
+        )
+        
+        gols_desafiante, gols_oponente = resultado['gols']
+        
+        placar = f"**{self.desafiante.display_name}** {gols_desafiante} ⚽ {gols_oponente} **{self.oponente.display_name}**"
+        embed.add_field(name="📊 Placar Final", value=placar, inline=False)
+        
+        if resultado['penaltis']:
+            pen_desafiante, pen_oponente = resultado['penaltis']
+            penaltis = f"**{self.desafiante.display_name}** {pen_desafiante} 🥅 {pen_oponente} **{self.oponente.display_name}**"
+            embed.add_field(name="🎯 Disputa de Pênaltis", value=penaltis, inline=False)
+        
+        if resultado['vencedor'] == 'desafiante':
+            embed.add_field(name="🏆 Vencedor", value=f"{self.desafiante.mention} 🎉", inline=False)
+            embed.add_field(name="💰 Prêmio", value="$5,000", inline=True)
+            embed.color = 0x00ff00
+        elif resultado['vencedor'] == 'oponente':
+            embed.add_field(name="🏆 Vencedor", value=f"{self.oponente.mention} 🎉", inline=False)
+            embed.add_field(name="💰 Prêmio", value="$5,000", inline=True)
+            embed.color = 0x00ff00
+        else:
+            embed.add_field(name="🤝 Resultado", value="Empate! Ambos recebem $2,000", inline=False)
+            embed.color = 0xffff00
+        
+        embed.set_footer(text="⚽ Boa partida! Use -stats para ver suas estatísticas.")
+        
+        return embed
+    
+    def remover_emprestados(self, user_id):
+        if user_id in self.vados.emprestimos:
+            emprestimos = self.vados.emprestimos[user_id][:]
+            for i, emp in enumerate(emprestimos):
+                emp['partidas_restantes'] -= 1
+                if emp['partidas_restantes'] <= 0:
+                    self.vados.emprestimos[user_id].pop(i)
+            
+            if not self.vados.emprestimos[user_id]:
+                del self.vados.emprestimos[user_id]
+
+# Comando stats melhorado
 @bot.command(name='stats')
 async def stats(ctx, usuario: discord.Member = None):
-    """Veja suas estatísticas ou de outro jogador"""
+    """Visualiza estatísticas detalhadas de um jogador"""
     if usuario is None:
         usuario = ctx.author
     
@@ -745,46 +920,76 @@ async def stats(ctx, usuario: discord.Member = None):
     
     total_jogos = user_data['vitorias'] + user_data['derrotas'] + user_data['empates']
     
+    # Estatísticas principais
     embed.add_field(name="🏆 Vitórias", value=user_data['vitorias'], inline=True)
     embed.add_field(name="❌ Derrotas", value=user_data['derrotas'], inline=True)
     embed.add_field(name="🤝 Empates", value=user_data['empates'], inline=True)
+    
     embed.add_field(name="🎮 Total de Jogos", value=total_jogos, inline=True)
     embed.add_field(name="💰 Dinheiro", value=f"${user_data['dinheiro']:,}", inline=True)
-    embed.add_field(name="⚽ Jogadores", value=len(user_data['jogadores']), inline=True)
+    embed.add_field(name="⚽ Jogadores no Elenco", value=len(user_data['jogadores']), inline=True)
     
     if total_jogos > 0:
         aproveitamento = (user_data['vitorias'] / total_jogos) * 100
         embed.add_field(name="📈 Aproveitamento", value=f"{aproveitamento:.1f}%", inline=True)
+        
+        # Determina rank baseado no aproveitamento
+        if aproveitamento >= 80:
+            rank = "🏆 Lendário"
+            cor = 0xffd700
+        elif aproveitamento >= 60:
+            rank = "💎 Experiente"
+            cor = 0x9932cc
+        elif aproveitamento >= 40:
+            rank = "🔵 Intermediário"
+            cor = 0x0099ff
+        else:
+            rank = "⚪ Iniciante"
+            cor = 0x808080
+        
+        embed.add_field(name="🎖️ Classificação", value=rank, inline=True)
+        embed.color = cor
+    
+    # Informações do elenco
+    if user_data['jogadores']:
+        media_habilidade = sum(j['habilidade'] for j in user_data['jogadores']) / len(user_data['jogadores'])
+        embed.add_field(name="📊 Média do Elenco", value=f"{media_habilidade:.1f}%", inline=True)
+    
+    embed.set_thumbnail(url=usuario.avatar.url if usuario.avatar else None)
+    embed.set_footer(text="🌟 Continue jogando para melhorar suas estatísticas!")
     
     await ctx.send(embed=embed)
 
-# Comando de ajuda personalizado
+# Comando ajuda melhorado
 @bot.command(name='ajuda')
 async def ajuda(ctx):
-    """Mostra todos os comandos disponíveis"""
+    """Central de ajuda completa do Vados Bot"""
     embed = discord.Embed(
-        title="🤖 Vados Bot - Comandos",
-        description="Bot para gerenciamento de futebol no Discord",
+        title="🤖 Vados Bot - Central de Comandos",
+        description="⚽ **Seu assistente completo para futebol no Discord!**",
         color=0x0099ff
     )
     
     comandos = {
-        "👥 **Jogadores**": [
-            "`-criar_jogador <nome> <posição> [habilidade]` - Cria um jogador personalizado",
-            "`-olheiro` - Vê jogadores disponíveis para contratação",
-            "`-elenco` - Mostra seu elenco atual"
+        "👥 **Gestão de Jogadores**": [
+            "`-criar_jogador <nome> <posição>` - Cria seu jogador único (1 por pessoa)",
+            "`-olheiro` - Descobre jogadores disponíveis no mercado",
+            "`-elenco [@usuário]` - Visualiza elenco completo",
         ],
-        "⚽ **Time**": [
-            "`-escalar` - Interface para escalar seu time",
-            "`-confronto @usuário` - Desafia outro usuário",
-            "`-stats [@usuário]` - Vê estatísticas de vitórias/derrotas"
+        "⚽ **Time & Escalação**": [
+            "`-escalar` - Interface moderna para escalar seu time",
+            "`-time [@usuário]` - Vê a escalação e formação do time",
         ],
-        "🏆 **Ligas**": [
+        "⚔️ **Confrontos**": [
+            "`-confronto @usuário` - Desafia outro jogador",
+            "`-stats [@usuário]` - Estatísticas detalhadas de vitórias/derrotas",
+        ],
+        "🏆 **Ligas** (Owner only)": [
             "`-criar_liga <nome>` - Cria uma nova liga",
-            "`-entrar_liga <id>` - Entra em uma liga existente"
+            "`-entrar_liga <id>` - Entra em uma liga existente",
         ],
-        "ℹ️ **Outros**": [
-            "`-ajuda` - Mostra esta mensagem"
+        "ℹ️ **Utilitários**": [
+            "`-ajuda` - Mostra esta central de comandos",
         ]
     }
     
@@ -795,10 +1000,18 @@ async def ajuda(ctx):
             inline=False
         )
     
-    embed.set_footer(text="Use o prefixo - antes de cada comando")
+    embed.add_field(
+        name="💡 **Dicas Importantes**",
+        value="• Cada jogador pode criar apenas 1 jogador personalizado\n• Jogadores criados começam com over 50 e evoluem\n• Empréstimos duram apenas 1 partida\n• Vitórias dão $5,000 e empates $2,000",
+        inline=False
+    )
+    
+    embed.set_footer(text="🌟 Use o prefixo - antes de cada comando | Bot criado com ❤️")
+    embed.set_thumbnail(url=ctx.guild.icon.url if ctx.guild and ctx.guild.icon else None)
+    
     await ctx.send(embed=embed)
 
-# Token do bot (substitua pelo seu token)
+# Token do bot
 TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 
 if TOKEN:
