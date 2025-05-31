@@ -9,6 +9,13 @@
           "habilidade": 92,
           "over": 90,
           "tipo": "comprado"
+        },
+        {
+          "nome": "Juliano New",
+          "posicao": "Meio Campo",
+          "habilidade": 65,
+          "over": 60,
+          "tipo": "criado"
         }
       ],
       "escalacao": {
