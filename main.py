@@ -12,6 +12,10 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='-', intents=intents)
 
+# Sistema de ganho automático
+import time
+from datetime import datetime, timedelta
+
 # Dados dos jogadores disponíveis no olheiro
 JOGADORES_OLHEIRO = [
     {"nome": "Oliver Santos", "posicao": "Goleiro", "over": 80, "habilidade": 82, "valor_mercado": 50000},
@@ -119,17 +123,84 @@ class VadosBot:
                 'vitorias': 0,
                 'derrotas': 0,
                 'empates': 0,
-                'jogadores_criados': 0
+                'jogadores_criados': 0,
+                'ultimo_ganho_automatico': None
             }
         return self.users_data[str(user_id)]
+    
+    def verificar_ganho_automatico(self, user_id):
+        user_data = self.get_user_data(user_id)
+        agora = datetime.now()
+        
+        if user_data['ultimo_ganho_automatico'] is None:
+            user_data['ultimo_ganho_automatico'] = agora.isoformat()
+            return False
+        
+        ultimo_ganho = datetime.fromisoformat(user_data['ultimo_ganho_automatico'])
+        if agora - ultimo_ganho >= timedelta(hours=24):
+            user_data['dinheiro'] += 50000
+            user_data['ultimo_ganho_automatico'] = agora.isoformat()
+            return True
+        
+        return False
 
 vados = VadosBot()
 
 @bot.event
 async def on_ready():
     await vados.load_data()
-    print(f'🚀 {bot.user} está online e pronto para gerenciar o futebol!')
+    print(f'🚀 MXP Football Manager está online e pronto para gerenciar o futebol!')
     print('=' * 50)
+
+# Comando ganho automático
+@bot.command(name='ganho_automatico')
+async def ganho_automatico(ctx):
+    """Coleta seu ganho automático de 50.000 reais (a cada 24h)"""
+    user_data = vados.get_user_data(ctx.author.id)
+    
+    if vados.verificar_ganho_automatico(ctx.author.id):
+        embed = discord.Embed(
+            title="💰 Ganho Automático Coletado!",
+            description="Você coletou seu ganho automático de **R$ 50.000**!",
+            color=0x00ff00
+        )
+        embed.add_field(name="💵 Valor Recebido", value="R$ 50.000", inline=True)
+        embed.add_field(name="💰 Saldo Atual", value=f"R$ {user_data['dinheiro']:,}", inline=True)
+        embed.add_field(name="⏰ Próximo Ganho", value="Em 24 horas", inline=True)
+        embed.set_footer(text="🎉 MXP Football Manager - Ganho automático coletado!")
+        await vados.save_data()
+    else:
+        # Calcula tempo restante
+        if user_data['ultimo_ganho_automatico']:
+            ultimo_ganho = datetime.fromisoformat(user_data['ultimo_ganho_automatico'])
+            proximo_ganho = ultimo_ganho + timedelta(hours=24)
+            tempo_restante = proximo_ganho - datetime.now()
+            
+            if tempo_restante.total_seconds() > 0:
+                horas = int(tempo_restante.total_seconds() // 3600)
+                minutos = int((tempo_restante.total_seconds() % 3600) // 60)
+                
+                embed = discord.Embed(
+                    title="⏰ Ganho Automático Não Disponível",
+                    description=f"Você já coletou seu ganho automático hoje!\n\n⏱️ **Tempo restante:** {horas}h {minutos}min",
+                    color=0xff9900
+                )
+                embed.add_field(name="💰 Saldo Atual", value=f"R$ {user_data['dinheiro']:,}", inline=True)
+                embed.add_field(name="💵 Próximo Valor", value="R$ 50.000", inline=True)
+            else:
+                embed = discord.Embed(
+                    title="🔄 Processando...",
+                    description="Aguarde um momento e tente novamente.",
+                    color=0x0099ff
+                )
+        else:
+            embed = discord.Embed(
+                title="🎉 Primeira Coleta!",
+                description="Aguarde um momento para processar sua primeira coleta.",
+                color=0x0099ff
+            )
+    
+    await ctx.send(embed=embed)
 
 # Event para comandos inválidos
 @bot.event
@@ -818,6 +889,59 @@ async def entrar_liga(ctx, liga_id: int):
     
     await ctx.send(embed=embed)
 
+# Comando x1 (confronto individual)
+@bot.command(name='x1')
+async def x1(ctx, oponente: discord.Member):
+    """Desafio x1 - apenas 1 jogador de cada lado"""
+    if oponente.id == ctx.author.id:
+        embed = discord.Embed(
+            title="❌ Autodesafio Impossível",
+            description="Você não pode desafiar a si mesmo!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
+    
+    user_data = vados.get_user_data(ctx.author.id)
+    oponente_data = vados.get_user_data(oponente.id)
+    
+    if not user_data['jogadores']:
+        embed = discord.Embed(
+            title="❌ Sem Jogadores",
+            description="Você precisa ter pelo menos 1 jogador!\n💡 Use `-olheiro` para contratar jogadores.",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
+    
+    if not oponente_data['jogadores']:
+        embed = discord.Embed(
+            title="❌ Oponente Sem Jogadores",
+            description=f"{oponente.mention} precisa ter pelo menos 1 jogador!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
+    
+    embed = discord.Embed(
+        title="⚡ Desafio X1",
+        description=f"🔥 **{ctx.author.display_name}** desafiou **{oponente.display_name}** para um X1!",
+        color=0xff9900
+    )
+    
+    # Mostra melhor jogador de cada um
+    melhor_desafiante = max(user_data['jogadores'], key=lambda x: x['habilidade'])
+    melhor_oponente = max(oponente_data['jogadores'], key=lambda x: x['habilidade'])
+    
+    embed.add_field(name=f"⚡ {ctx.author.display_name}", value=f"**{melhor_desafiante['nome']}**\n{melhor_desafiante['habilidade']}% | {melhor_desafiante['posicao']}", inline=True)
+    embed.add_field(name="🆚", value="**VS**", inline=True)
+    embed.add_field(name=f"⚡ {oponente.display_name}", value=f"**{melhor_oponente['nome']}**\n{melhor_oponente['habilidade']}% | {melhor_oponente['posicao']}", inline=True)
+    
+    embed.set_footer(text="⏰ Oponente tem 5 minutos para responder!")
+    
+    view = X1View(ctx.author, oponente, user_data, oponente_data, vados)
+    await ctx.send(embed=embed, view=view)
+
 # Comando confronto melhorado
 @bot.command(name='confronto')
 async def confronto(ctx, oponente: discord.Member):
@@ -874,6 +998,216 @@ async def confronto(ctx, oponente: discord.Member):
     
     view = ConfrontoView(ctx.author, oponente, user_data, oponente_data, vados)
     await ctx.send(embed=embed, view=view)
+
+class X1View(discord.ui.View):
+    def __init__(self, desafiante, oponente, desafiante_data, oponente_data, vados_instance):
+        super().__init__(timeout=300)
+        self.desafiante = desafiante
+        self.oponente = oponente
+        self.desafiante_data = desafiante_data
+        self.oponente_data = oponente_data
+        self.vados = vados_instance
+    
+    @discord.ui.button(label="✅ Aceitar X1", style=discord.ButtonStyle.success, emoji="⚡")
+    async def aceitar(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if interaction.user.id != self.oponente.id:
+            await interaction.response.send_message("❌ Apenas o desafiado pode aceitar!", ephemeral=True)
+            return
+        
+        # Seleciona automaticamente os melhores jogadores
+        melhor_desafiante = max(self.desafiante_data['jogadores'], key=lambda x: x['habilidade'])
+        melhor_oponente = max(self.oponente_data['jogadores'], key=lambda x: x['habilidade'])
+        
+        # Simula o X1 com eventos em tempo real
+        embed_inicial = discord.Embed(
+            title="⚡ X1 EM ANDAMENTO",
+            description="🔥 A partida está começando...",
+            color=0xffff00
+        )
+        embed_inicial.add_field(name=f"⚡ {self.desafiante.display_name}", value=f"{melhor_desafiante['nome']}", inline=True)
+        embed_inicial.add_field(name="🆚", value="**VS**", inline=True)
+        embed_inicial.add_field(name=f"⚡ {self.oponente.display_name}", value=f"{melhor_oponente['nome']}", inline=True)
+        
+        await interaction.response.edit_message(embed=embed_inicial, view=None)
+        
+        # Simula eventos
+        await self.simular_x1_eventos(interaction, melhor_desafiante, melhor_oponente)
+    
+    @discord.ui.button(label="❌ Recusar", style=discord.ButtonStyle.danger, emoji="🚫")
+    async def recusar(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if interaction.user.id != self.oponente.id:
+            await interaction.response.send_message("❌ Apenas o desafiado pode recusar!", ephemeral=True)
+            return
+        
+        embed = discord.Embed(
+            title="❌ X1 Recusado",
+            description=f"**{self.oponente.display_name}** recusou o X1 de **{self.desafiante.display_name}**.",
+            color=0xff0000
+        )
+        embed.set_footer(text="🐔 Que pena! Talvez na próxima...")
+        
+        await interaction.response.edit_message(embed=embed, view=None)
+    
+    async def simular_x1_eventos(self, interaction, jogador1, jogador2):
+        eventos = []
+        gols_jogador1 = 0
+        gols_jogador2 = 0
+        
+        # Define se é goleiro
+        is_goleiro1 = jogador1['posicao'].lower() == 'goleiro'
+        is_goleiro2 = jogador2['posicao'].lower() == 'goleiro'
+        
+        # Simula eventos durante 5 minutos (representando tempo de jogo)
+        for minuto in range(1, 6):
+            await asyncio.sleep(2)  # Pausa entre eventos
+            
+            # Determina quem tem a ação baseado na habilidade
+            if random.randint(1, 100) <= (jogador1['habilidade'] * 0.7):
+                acao_jogador = jogador1
+                defensor = jogador2
+                atacante_num = 1
+            else:
+                acao_jogador = jogador2
+                defensor = jogador1
+                atacante_num = 2
+            
+            # Tipos de eventos baseados na posição
+            evento_tipo = self.determinar_evento(acao_jogador, defensor)
+            
+            if evento_tipo == "gol":
+                if atacante_num == 1:
+                    gols_jogador1 += 1
+                    if not is_goleiro1:
+                        eventos.append(f"⚽ **GOL!** {acao_jogador['nome']} marca um golaço!")
+                    else:
+                        eventos.append(f"⚽ **GOL!** O goleiro {acao_jogador['nome']} surpreende e marca!")
+                else:
+                    gols_jogador2 += 1
+                    if not is_goleiro2:
+                        eventos.append(f"⚽ **GOL!** {acao_jogador['nome']} marca um golaço!")
+                    else:
+                        eventos.append(f"⚽ **GOL!** O goleiro {acao_jogador['nome']} surpreende e marca!")
+            
+            elif evento_tipo == "defesa":
+                eventos.append(f"🛡️ {defensor['nome']} faz uma defesa espetacular!")
+            
+            elif evento_tipo == "bloqueio":
+                eventos.append(f"🚫 {defensor['nome']} bloqueia o chute de {acao_jogador['nome']}!")
+            
+            elif evento_tipo == "contra_ataque":
+                eventos.append(f"⚡ {acao_jogador['nome']} inicia um contra-ataque perigoso!")
+            
+            elif evento_tipo == "chute_fora":
+                eventos.append(f"📤 {acao_jogador['nome']} chuta para fora por pouco!")
+            
+            # Atualiza o embed com os eventos
+            embed_evento = discord.Embed(
+                title=f"⚡ X1 - Minuto {minuto}",
+                description=f"**Placar:** {gols_jogador1} x {gols_jogador2}",
+                color=0x00ff00 if minuto == 5 else 0xffff00
+            )
+            
+            embed_evento.add_field(
+                name="📝 Último Evento",
+                value=eventos[-1] if eventos else "Início da partida...",
+                inline=False
+            )
+            
+            if len(eventos) > 1:
+                embed_evento.add_field(
+                    name="📜 Eventos Anteriores",
+                    value="\n".join(eventos[-3:-1]) if len(eventos) > 3 else "\n".join(eventos[:-1]),
+                    inline=False
+                )
+            
+            await interaction.edit_original_response(embed=embed_evento)
+        
+        # Resultado final
+        await asyncio.sleep(2)
+        resultado_embed = self.criar_embed_resultado_x1(gols_jogador1, gols_jogador2, jogador1, jogador2, eventos)
+        
+        # Atualiza dados dos jogadores
+        if gols_jogador1 > gols_jogador2:
+            self.desafiante_data['vitorias'] += 1
+            self.oponente_data['derrotas'] += 1
+            self.desafiante_data['dinheiro'] += 3000  # Prêmio menor para X1
+        elif gols_jogador2 > gols_jogador1:
+            self.oponente_data['vitorias'] += 1
+            self.desafiante_data['derrotas'] += 1
+            self.oponente_data['dinheiro'] += 3000
+        else:
+            self.desafiante_data['empates'] += 1
+            self.oponente_data['empates'] += 1
+            self.desafiante_data['dinheiro'] += 1500
+            self.oponente_data['dinheiro'] += 1500
+        
+        await self.vados.save_data()
+        await interaction.edit_original_response(embed=resultado_embed)
+    
+    def determinar_evento(self, atacante, defensor):
+        # Probabilidades baseadas na diferença de habilidade
+        diff_habilidade = atacante['habilidade'] - defensor['habilidade']
+        
+        # Ajusta probabilidades baseado na posição
+        prob_gol = 30
+        if atacante['posicao'].lower() in ['atacante', 'ponta']:
+            prob_gol += 15
+        elif atacante['posicao'].lower() == 'goleiro':
+            prob_gol -= 20
+        
+        if defensor['posicao'].lower() in ['zagueiro', 'goleiro']:
+            prob_gol -= 10
+        
+        # Ajusta pela diferença de habilidade
+        prob_gol += diff_habilidade // 5
+        prob_gol = max(5, min(prob_gol, 70))  # Entre 5% e 70%
+        
+        rand = random.randint(1, 100)
+        
+        if rand <= prob_gol:
+            return "gol"
+        elif rand <= prob_gol + 20:
+            return "defesa"
+        elif rand <= prob_gol + 35:
+            return "bloqueio"
+        elif rand <= prob_gol + 50:
+            return "contra_ataque"
+        else:
+            return "chute_fora"
+    
+    def criar_embed_resultado_x1(self, gols1, gols2, jogador1, jogador2, eventos):
+        embed = discord.Embed(
+            title="🏁 X1 FINALIZADO!",
+            color=0x00ff00
+        )
+        
+        placar = f"**{self.desafiante.display_name}** {gols1} ⚽ {gols2} **{self.oponente.display_name}**"
+        embed.add_field(name="📊 Placar Final", value=placar, inline=False)
+        
+        if gols1 > gols2:
+            embed.add_field(name="🏆 Vencedor", value=f"{self.desafiante.mention} 🎉", inline=True)
+            embed.add_field(name="💰 Prêmio", value="R$ 3.000", inline=True)
+            embed.color = 0x00ff00
+        elif gols2 > gols1:
+            embed.add_field(name="🏆 Vencedor", value=f"{self.oponente.mention} 🎉", inline=True)
+            embed.add_field(name="💰 Prêmio", value="R$ 3.000", inline=True)
+            embed.color = 0x00ff00
+        else:
+            embed.add_field(name="🤝 Resultado", value="Empate! Ambos recebem R$ 1.500", inline=False)
+            embed.color = 0xffff00
+        
+        # Mostra eventos mais importantes
+        eventos_importantes = [e for e in eventos if "GOL" in e]
+        if eventos_importantes:
+            embed.add_field(
+                name="⚽ Gols da Partida",
+                value="\n".join(eventos_importantes[-5:]),  # Últimos 5 gols
+                inline=False
+            )
+        
+        embed.set_footer(text="⚡ X1 finalizado! Use -stats para ver suas estatísticas.")
+        
+        return embed
 
 class ConfrontoView(discord.ui.View):
     def __init__(self, desafiante, oponente, desafiante_data, oponente_data, vados_instance):
@@ -1074,12 +1408,79 @@ async def stats(ctx, usuario: discord.Member = None):
     
     await ctx.send(embed=embed)
 
+# Comandos Admin (apenas owner)
+@bot.command(name='add_dinheiro')
+async def add_dinheiro(ctx, usuario: discord.Member, quantidade: int):
+    """Adiciona dinheiro a um usuário (apenas owner)"""
+    if ctx.author.id != OWNER_ID:
+        embed = discord.Embed(
+            title="🚫 Acesso Negado",
+            description="Apenas o owner do bot pode usar este comando!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
+    
+    user_data = vados.get_user_data(usuario.id)
+    user_data['dinheiro'] += quantidade
+    await vados.save_data()
+    
+    embed = discord.Embed(
+        title="💰 Dinheiro Adicionado!",
+        description=f"**R$ {quantidade:,}** foram adicionados para {usuario.mention}",
+        color=0x00ff00
+    )
+    embed.add_field(name="👤 Usuário", value=usuario.mention, inline=True)
+    embed.add_field(name="💵 Valor Adicionado", value=f"R$ {quantidade:,}", inline=True)
+    embed.add_field(name="💰 Saldo Atual", value=f"R$ {user_data['dinheiro']:,}", inline=True)
+    
+    await ctx.send(embed=embed)
+
+@bot.command(name='add_todos_jogadores')
+async def add_todos_jogadores(ctx, usuario: discord.Member):
+    """Adiciona todos os jogadores disponíveis a um usuário (apenas owner)"""
+    if ctx.author.id != OWNER_ID:
+        embed = discord.Embed(
+            title="🚫 Acesso Negado",
+            description="Apenas o owner do bot pode usar este comando!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
+    
+    user_data = vados.get_user_data(usuario.id)
+    
+    # Adiciona todos os jogadores do olheiro
+    for jogador_olheiro in JOGADORES_OLHEIRO:
+        jogador = {
+            'nome': jogador_olheiro['nome'],
+            'posicao': jogador_olheiro['posicao'],
+            'habilidade': jogador_olheiro['habilidade'],
+            'over': jogador_olheiro['over'],
+            'tipo': 'admin_grant'
+        }
+        user_data['jogadores'].append(jogador)
+    
+    await vados.save_data()
+    
+    embed = discord.Embed(
+        title="⭐ Todos os Jogadores Adicionados!",
+        description=f"**{len(JOGADORES_OLHEIRO)}** jogadores foram adicionados para {usuario.mention}",
+        color=0x00ff00
+    )
+    embed.add_field(name="👤 Usuário", value=usuario.mention, inline=True)
+    embed.add_field(name="⚽ Jogadores Adicionados", value=len(JOGADORES_OLHEIRO), inline=True)
+    embed.add_field(name="📋 Total no Elenco", value=len(user_data['jogadores']), inline=True)
+    embed.set_footer(text="🌟 Todos os jogadores foram concedidos pelo administrador!")
+    
+    await ctx.send(embed=embed)
+
 # Comando ajuda melhorado
 @bot.command(name='ajuda')
 async def ajuda(ctx):
     """Central de ajuda completa do Vados Bot"""
     embed = discord.Embed(
-        title="🤖 Vados Bot - Central de Comandos",
+        title="🤖 MXP Football Manager - Central de Comandos",
         description="⚽ **Seu assistente completo para futebol no Discord!**",
         color=0x0099ff
     )
@@ -1095,12 +1496,20 @@ async def ajuda(ctx):
             "`-time [@usuário]` - Vê a escalação e formação do time",
         ],
         "⚔️ **Confrontos**": [
-            "`-confronto @usuário` - Desafia outro jogador",
+            "`-confronto @usuário` - Desafia outro jogador (time completo)",
+            "`-x1 @usuário` - Desafio X1 com eventos em tempo real",
             "`-stats [@usuário]` - Estatísticas detalhadas de vitórias/derrotas",
+        ],
+        "💰 **Sistema Econômico**": [
+            "`-ganho_automatico` - Coleta R$ 50.000 (a cada 24h)",
         ],
         "🏆 **Ligas** (Owner only)": [
             "`-criar_liga <nome>` - Cria uma nova liga",
             "`-entrar_liga <id>` - Entra em uma liga existente",
+        ],
+        "👑 **Comandos Admin** (Owner only)": [
+            "`-add_dinheiro @usuário <valor>` - Adiciona dinheiro",
+            "`-add_todos_jogadores @usuário` - Dá todos os jogadores",
         ],
         "ℹ️ **Utilitários**": [
             "`-ajuda` - Mostra esta central de comandos",
@@ -1116,7 +1525,7 @@ async def ajuda(ctx):
     
     embed.add_field(
         name="💡 **Dicas Importantes**",
-        value="• Cada jogador pode criar apenas 1 jogador personalizado\n• Jogadores criados têm habilidade aleatória (45-60%)\n• Empréstimos duram apenas 1 partida\n• Vitórias dão $5,000 e empates $2,000",
+        value="• Ganho automático de R$ 50.000 a cada 24h\n• X1 tem eventos em tempo real com narrativa\n• Confrontos completos vs X1 têm prêmios diferentes\n• Jogadores criados evoluem com o tempo",
         inline=False
     )
     
