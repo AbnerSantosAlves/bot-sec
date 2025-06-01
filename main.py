@@ -2475,6 +2475,90 @@ async def restore_roles(ctx, user_id: str):
     except Exception as e:
         await ctx.send(f"❌ Erro ao restaurar cargos: {e}")
 
+@bot.command(name='sec_whitelist')
+async def manage_whitelist(ctx, action: str = None, user_id: str = None):
+    """Gerencia a whitelist de usuários autorizados (apenas owner)"""
+    # Verifica se é o owner do bot
+    if ctx.author.id != OWNER_ID:
+        embed = discord.Embed(
+            title="🚫 Acesso Negado",
+            description="Apenas o owner do bot pode usar este comando!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
+    
+    if not action:
+        embed = discord.Embed(
+            title="🔐 Whitelist de Segurança",
+            description="Usuários na whitelist podem deletar canais e cargos sem punição:",
+            color=0x0099ff
+        )
+        
+        whitelist_users = []
+        for user_id in WHITELIST_IDS:
+            user = bot.get_user(user_id)
+            if user:
+                whitelist_users.append(f"{user.mention} ({user_id})")
+            else:
+                whitelist_users.append(f"Usuário Desconhecido ({user_id})")
+        
+        embed.add_field(
+            name="👥 Usuários Autorizados",
+            value='\n'.join(whitelist_users) if whitelist_users else "Nenhum usuário na whitelist",
+            inline=False
+        )
+        
+        embed.add_field(
+            name="💡 Como usar:",
+            value="`-sec_whitelist add <ID>`\n`-sec_whitelist remove <ID>`\n`-sec_whitelist list`",
+            inline=False
+        )
+        
+        await ctx.send(embed=embed)
+        return
+    
+    if action == 'add' and user_id:
+        try:
+            user_id_int = int(user_id)
+            if user_id_int not in WHITELIST_IDS:
+                WHITELIST_IDS.append(user_id_int)
+                user = bot.get_user(user_id_int)
+                username = user.mention if user else f"ID: {user_id_int}"
+                
+                embed = discord.Embed(
+                    title="✅ Usuário Adicionado à Whitelist",
+                    description=f"{username} foi adicionado à whitelist de segurança.",
+                    color=0x00ff00
+                )
+                await ctx.send(embed=embed)
+            else:
+                await ctx.send("❌ Usuário já está na whitelist.")
+        except ValueError:
+            await ctx.send("❌ ID inválido.")
+    
+    elif action == 'remove' and user_id:
+        try:
+            user_id_int = int(user_id)
+            if user_id_int in WHITELIST_IDS:
+                WHITELIST_IDS.remove(user_id_int)
+                user = bot.get_user(user_id_int)
+                username = user.mention if user else f"ID: {user_id_int}"
+                
+                embed = discord.Embed(
+                    title="✅ Usuário Removido da Whitelist",
+                    description=f"{username} foi removido da whitelist de segurança.",
+                    color=0xff9900
+                )
+                await ctx.send(embed=embed)
+            else:
+                await ctx.send("❌ Usuário não está na whitelist.")
+        except ValueError:
+            await ctx.send("❌ ID inválido.")
+    
+    else:
+        await ctx.send("❌ Uso: `-sec_whitelist add/remove <ID>`")
+
 @bot.command(name='sec_status')
 async def security_status(ctx):
     """Mostra o status do sistema de segurança"""
