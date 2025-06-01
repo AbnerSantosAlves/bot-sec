@@ -1,4 +1,3 @@
-
 import discord
 from discord.ext import commands
 import json
@@ -27,7 +26,7 @@ PALAVROES = [
 
 # Dados dos jogadores disponíveis no olheiro
 JOGADORES_OLHEIRO = [
-    {"nome": "Oliver Santos", "posicao": "Goleiro", "over": 80, "habilidade": 82, "valor_mercado": 50000},
+    {"nome": "Oliver Pau no Cu Santos", "posicao": "Goleiro", "over": 93, "habilidade": 93, "valor_mercado": 350000},
     {"nome": "Zargão", "posicao": "Zagueiro", "over": 80, "habilidade": 82, "valor_mercado": 45000},
     {"nome": "Bruno", "posicao": "Zagueiro", "over": 84, "habilidade": 86, "valor_mercado": 60000},
     {"nome": "Anthony", "posicao": "Meia", "over": 85, "habilidade": 87, "valor_mercado": 65000},
@@ -38,7 +37,7 @@ JOGADORES_OLHEIRO = [
     {"nome": "Zau", "posicao": "Goleiro", "over": 88, "habilidade": 89, "valor_mercado": 75000},
     {"nome": "Hiroshi", "posicao": "Goleiro", "over": 84, "habilidade": 86, "valor_mercado": 55000},
     {"nome": "Sassa", "posicao": "Goleiro", "over": 76, "habilidade": 75, "valor_mercado": 35000},
-    {"nome": "Oliver Wayne", "posicao": "Zagueiro", "over": 91, "habilidade": 93, "valor_mercado": 100000},
+    {"nome": "Oliver Wayne", "posicao": "Zagueiro", "over": 91, "habilidade": 93, "valor_mercado": 350000},
     {"nome": "Corvino", "posicao": "Ponta", "over": 86, "habilidade": 88, "valor_mercado": 70000},
     {"nome": "Pdrz", "posicao": "Atacante", "over": 86, "habilidade": 88, "valor_mercado": 70000},
     {"nome": "Nott", "posicao": "Meio Campo", "over": 83, "habilidade": 85, "valor_mercado": 55000},
@@ -49,7 +48,7 @@ JOGADORES_OLHEIRO = [
     {"nome": "Crazy", "posicao": "Ponta", "over": 88, "habilidade": 89, "valor_mercado": 80000},
     {"nome": "Pietro", "posicao": "Volante", "over": 80, "habilidade": 82, "valor_mercado": 45000},
     {"nome": "Matheus Taylor", "posicao": "Ponta Esquerda", "over": 96, "habilidade": 98, "valor_mercado": 150000},
-    {"nome": "Juliano Henrique", "posicao": "Atacante", "over": 99, "habilidade": 100, "valor_mercado": 200000},
+    {"nome": "Juliano Henrique", "posicao": "Atacante", "over": 100, "habilidade": 100, "valor_mercado": 1000000},
     {"nome": "Michael Owen", "posicao": "Goleiro", "over": 99, "habilidade": 100, "valor_mercado": 200000},
     {"nome": "Phillipe Guedes", "posicao": "Atacante", "over": 88, "habilidade": 89, "valor_mercado": 80000},
     {"nome": "Prince", "posicao": "Ponta Direita", "over": 91, "habilidade": 93, "valor_mercado": 100000},
@@ -146,22 +145,22 @@ class VadosBot:
                 'derrotas': 0,
                 'empates': 0,
                 'jogadores_criados': 0,
-                'ultimo_ganho_automatico': None
+                'ultimo_ganho_daily': None
             }
         return self.users_data[str(user_id)]
     
-    def verificar_ganho_automatico(self, user_id):
+    def verificar_ganho_daily(self, user_id):
         user_data = self.get_user_data(user_id)
         agora = datetime.now()
         
-        if user_data['ultimo_ganho_automatico'] is None:
-            user_data['ultimo_ganho_automatico'] = agora.isoformat()
+        if user_data['ultimo_daily'] is None:
+            user_data['ultimo_daily'] = agora.isoformat()
             return False
         
-        ultimo_ganho = datetime.fromisoformat(user_data['ultimo_ganho_automatico'])
+        ultimo_ganho = datetime.fromisoformat(user_data['ultimo_daily'])
         if agora - ultimo_ganho >= timedelta(hours=24):
             user_data['dinheiro'] += 50000
-            user_data['ultimo_ganho_automatico'] = agora.isoformat()
+            user_data['ultimo_daily'] = agora.isoformat()
             return True
         
         return False
@@ -449,15 +448,15 @@ async def criar_time(ctx):
     await ctx.send(embed=embed, view=view)
 
 # Comando ganho automático
-@bot.command(name='ganho_automatico')
-async def ganho_automatico(ctx):
+@bot.command(name='daily')
+async def daily(ctx):
     """Coleta seu ganho automático de 50.000 reais (a cada 24h)"""
     if not await verificar_time_obrigatorio(ctx):
         return
         
     user_data = vados.get_user_data(ctx.author.id)
     
-    if vados.verificar_ganho_automatico(ctx.author.id):
+    if vados.verificar_daily(ctx.author.id):
         embed = discord.Embed(
             title="💰 Ganho Automático Coletado!",
             description="Você coletou seu ganho automático de **R$ 50.000**!",
@@ -470,8 +469,8 @@ async def ganho_automatico(ctx):
         await vados.save_data()
     else:
         # Calcula tempo restante
-        if user_data['ultimo_ganho_automatico']:
-            ultimo_ganho = datetime.fromisoformat(user_data['ultimo_ganho_automatico'])
+        if user_data['ultimo_daily']:
+            ultimo_ganho = datetime.fromisoformat(user_data['ultimo_daily'])
             proximo_ganho = ultimo_ganho + timedelta(hours=24)
             tempo_restante = proximo_ganho - datetime.now()
             
@@ -485,7 +484,7 @@ async def ganho_automatico(ctx):
                     color=0xff9900
                 )
                 embed.add_field(name="💰 Saldo Atual", value=f"R$ {user_data['dinheiro']:,}", inline=True)
-                embed.add_field(name="💵 Próximo Valor", value="R$ 50.000", inline=True)
+                embed.add_field(name="💵 Próximo Valor", value="R$ 70.000", inline=True)
             else:
                 embed = discord.Embed(
                     title="🔄 Processando...",
@@ -1972,7 +1971,7 @@ async def ajuda(ctx):
             "`-stats [@usuário]` - Estatísticas detalhadas",
         ],
         "💰 **Sistema Econômico**": [
-            "`-ganho_automatico` - Coleta R$ 50.000 (a cada 24h)",
+            "`-daily` - Coleta R$ 70.000 (a cada 24h)",
         ],
         "👑 **Comandos Admin** (Owner only)": [
             "`-add_dinheiro @usuário <valor>` - Adiciona dinheiro",

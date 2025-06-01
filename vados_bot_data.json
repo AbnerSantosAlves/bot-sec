@@ -1,410 +1,13 @@
 {
   "users_data": {
     "983196900910039090": {
-      "dinheiro": 10000,
-      "jogadores": [
-        {
-          "nome": "Kai Guedes",
-          "posicao": "Ponta Dir.",
-          "habilidade": 92,
-          "over": 90,
-          "tipo": "comprado"
-        },
-        {
-          "nome": "Juliano New",
-          "posicao": "Meio Campo",
-          "habilidade": 65,
-          "over": 60,
-          "tipo": "criado"
-        },
-        {
-          "nome": "Oliver Santos",
-          "posicao": "Goleiro",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Zargão",
-          "posicao": "Zagueiro",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Bruno",
-          "posicao": "Zagueiro",
-          "habilidade": 86,
-          "over": 84,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Anthony",
-          "posicao": "Meia",
-          "habilidade": 87,
-          "over": 85,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Lewis Ferguson",
-          "posicao": "Atacante",
-          "habilidade": 78,
-          "over": 79,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Saulo Bezerra",
-          "posicao": "Atacante",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Pedro Caldas",
-          "posicao": "Atacante",
-          "habilidade": 87,
-          "over": 85,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Brunno Santos",
-          "posicao": "Meio Campo",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Zau",
-          "posicao": "Goleiro",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Hiroshi",
-          "posicao": "Goleiro",
-          "habilidade": 86,
-          "over": 84,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Sassa",
-          "posicao": "Goleiro",
-          "habilidade": 75,
-          "over": 76,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Oliver Wayne",
-          "posicao": "Zagueiro",
-          "habilidade": 93,
-          "over": 91,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Corvino",
-          "posicao": "Ponta",
-          "habilidade": 88,
-          "over": 86,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Pdrz",
-          "posicao": "Atacante",
-          "habilidade": 88,
-          "over": 86,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Nott",
-          "posicao": "Meio",
-          "habilidade": 85,
-          "over": 83,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Keven",
-          "posicao": "Atacante",
-          "habilidade": 88,
-          "over": 86,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Ronaldinho Cruzeiro",
-          "posicao": "Ponta",
-          "habilidade": 86,
-          "over": 84,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Carlos Cruzeiro",
-          "posicao": "Meio",
-          "habilidade": 87,
-          "over": 85,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Gustavo Soares",
-          "posicao": "Meia-Central",
-          "habilidade": 83,
-          "over": 82,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Crazy",
-          "posicao": "Ponta",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Pietro",
-          "posicao": "Volante",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Matheus Taylor",
-          "posicao": "Ponta Esq.",
-          "habilidade": 98,
-          "over": 96,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Juliano Henrique",
-          "posicao": "Atacante",
-          "habilidade": 100,
-          "over": 99,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Michael Owen",
-          "posicao": "Goleiro",
-          "habilidade": 100,
-          "over": 99,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Phillipe Guedes",
-          "posicao": "Atacante",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Prince",
-          "posicao": "Ponta Direita",
-          "habilidade": 93,
-          "over": 91,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Hiroshi",
-          "posicao": "Zagueiro",
-          "habilidade": 92,
-          "over": 90,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Felipe Botelho",
-          "posicao": "Meio Campo",
-          "habilidade": 88,
-          "over": 87,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "M. De Light",
-          "posicao": "Zagueiro",
-          "habilidade": 92,
-          "over": 90,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Kai Guedes",
-          "posicao": "Ponta Dir.",
-          "habilidade": 92,
-          "over": 90,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Macaé",
-          "posicao": "Atacante",
-          "habilidade": 90,
-          "over": 89,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Lucas Bask",
-          "posicao": "Zagueiro",
-          "habilidade": 78,
-          "over": 79,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Sam Ker",
-          "posicao": "Atacante",
-          "habilidade": 74,
-          "over": 75,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Jake Willy",
-          "posicao": "Atacante",
-          "habilidade": 68,
-          "over": 69,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Zake Zau",
-          "posicao": "Volante",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Helena Silva",
-          "posicao": "Zagueira",
-          "habilidade": 70,
-          "over": 70,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Luan Alves",
-          "posicao": "Goleiro",
-          "habilidade": 68,
-          "over": 69,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Fernando M.",
-          "posicao": "Atacante",
-          "habilidade": 71,
-          "over": 71,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Coutinho S.",
-          "posicao": "Meio Campo",
-          "habilidade": 68,
-          "over": 69,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Kaio Becker",
-          "posicao": "Zagueiro",
-          "habilidade": 66,
-          "over": 67,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Caio Miguel",
-          "posicao": "Goleiro",
-          "habilidade": 68,
-          "over": 69,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Alex",
-          "posicao": "Volante",
-          "habilidade": 74,
-          "over": 75,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Matheus Mtzx",
-          "posicao": "Ponta Dir.",
-          "habilidade": 70,
-          "over": 70,
-          "tipo": "admin_grant"
-        }
-      ],
-      "escalacao": {
-        "goleiro": {
-          "nome": "Zau",
-          "posicao": "Goleiro",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        },
-        "zagueiro1": {
-          "nome": "Bruno",
-          "posicao": "Zagueiro",
-          "habilidade": 86,
-          "over": 84,
-          "tipo": "admin_grant"
-        },
-        "zagueiro2": {
-          "nome": "Bruno",
-          "posicao": "Zagueiro",
-          "habilidade": 86,
-          "over": 84,
-          "tipo": "admin_grant"
-        },
-        "lateral_esq": {
-          "nome": "Oliver Wayne",
-          "posicao": "Zagueiro",
-          "habilidade": 93,
-          "over": 91,
-          "tipo": "admin_grant"
-        },
-        "lateral_dir": {
-          "nome": "Brunno Santos",
-          "posicao": "Meio Campo",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        "volante": {
-          "nome": "Juliano New",
-          "posicao": "Meio Campo",
-          "habilidade": 65,
-          "over": 60,
-          "tipo": "criado"
-        },
-        "meia": {
-          "nome": "Anthony",
-          "posicao": "Meia",
-          "habilidade": 87,
-          "over": 85,
-          "tipo": "admin_grant"
-        },
-        "ponta_esq": {
-          "nome": "Ronaldinho Cruzeiro",
-          "posicao": "Ponta",
-          "habilidade": 86,
-          "over": 84,
-          "tipo": "admin_grant"
-        },
-        "ponta_dir": {
-          "nome": "Keven",
-          "posicao": "Atacante",
-          "habilidade": 88,
-          "over": 86,
-          "tipo": "admin_grant"
-        },
-        "atacante1": {
-          "nome": "Saulo Bezerra",
-          "posicao": "Atacante",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        },
-        "atacante2": {
-          "nome": "Kai Guedes",
-          "posicao": "Ponta Dir.",
-          "habilidade": 92,
-          "over": 90,
-          "tipo": "comprado"
-        }
-      },
-      "vitorias": 1,
-      "derrotas": 0,
-      "empates": 0
-    },
-    "1248472513600688229": {
       "dinheiro": 100000,
       "jogadores": [],
+      "time": {
+        "nome": "Yevgenny",
+        "sigla": "YEV",
+        "criado_em": "2025-06-01T00:49:39.352237"
+      },
       "escalacao": {
         "goleiro": null,
         "zagueiro1": null,
@@ -422,20 +25,25 @@
       "derrotas": 0,
       "empates": 0,
       "jogadores_criados": 0,
-      "ultimo_ganho_automatico": null
+      "ultimo_ganho_daily": null
     },
-    "1308474496327352371": {
+    "1167254751038156881": {
       "dinheiro": 100000,
       "jogadores": [
         {
-          "nome": "Garnacho",
-          "posicao": "Atacante",
-          "habilidade": 57,
+          "nome": "Jhow",
+          "posicao": "Lateral",
+          "habilidade": 49,
           "over": 50,
           "tipo": "criado",
           "evolucoes": 0
         }
       ],
+      "time": {
+        "nome": "Souta o Poze",
+        "sigla": "SOP",
+        "criado_em": "2025-06-01T00:53:20.765943"
+      },
       "escalacao": {
         "goleiro": null,
         "zagueiro1": null,
@@ -446,70 +54,6 @@
         "meia": null,
         "ponta_esq": null,
         "ponta_dir": null,
-        "atacante1": {
-          "nome": "Garnacho",
-          "posicao": "Atacante",
-          "habilidade": 57,
-          "over": 50,
-          "tipo": "criado",
-          "evolucoes": 0
-        },
-        "atacante2": null
-      },
-      "vitorias": 0,
-      "derrotas": 0,
-      "empates": 0,
-      "jogadores_criados": 1,
-      "ultimo_ganho_automatico": "2025-05-31T23:00:54.407935"
-    },
-    "1323305782086996039": {
-      "dinheiro": 42500,
-      "jogadores": [
-        {
-          "nome": "mutanolol",
-          "posicao": "zagueiro",
-          "habilidade": 52,
-          "over": 50,
-          "tipo": "criado",
-          "evolucoes": 0
-        }
-      ],
-      "escalacao": {
-        "goleiro": {
-          "nome": "mutanolol",
-          "posicao": "zagueiro",
-          "habilidade": 52,
-          "over": 50,
-          "tipo": "criado",
-          "evolucoes": 0
-        },
-        "zagueiro1": {
-          "nome": "mutanolol",
-          "posicao": "zagueiro",
-          "habilidade": 52,
-          "over": 50,
-          "tipo": "criado",
-          "evolucoes": 0
-        },
-        "zagueiro2": null,
-        "lateral_esq": null,
-        "lateral_dir": null,
-        "volante": null,
-        "meia": null,
-        "ponta_esq": {
-          "nome": "Crazy",
-          "posicao": "Ponta",
-          "habilidade": 89,
-          "over": 88,
-          "partidas_restantes": 1
-        },
-        "ponta_dir": {
-          "nome": "Prince",
-          "posicao": "Ponta Direita",
-          "habilidade": 93,
-          "over": 91,
-          "partidas_restantes": 1
-        },
         "atacante1": null,
         "atacante2": null
       },
@@ -517,443 +61,129 @@
       "derrotas": 0,
       "empates": 0,
       "jogadores_criados": 1,
-      "ultimo_ganho_automatico": "2025-05-31T23:00:54.456454"
+      "ultimo_ganho_daily": null
     },
-    "1350661643960324096": {
-      "dinheiro": 100000,
+    "973305294748803162": {
+      "dinheiro": 15000,
       "jogadores": [
         {
-          "nome": "Mark Lispector",
-          "posicao": "Atacante",
-          "habilidade": 50,
+          "nome": "Jony",
+          "posicao": "Meia",
+          "habilidade": 58,
           "over": 50,
           "tipo": "criado",
           "evolucoes": 0
-        },
-        {
-          "nome": "Oliver Santos",
-          "posicao": "Goleiro",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Zargão",
-          "posicao": "Zagueiro",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Bruno",
-          "posicao": "Zagueiro",
-          "habilidade": 86,
-          "over": 84,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Anthony",
-          "posicao": "Meia",
-          "habilidade": 87,
-          "over": 85,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Lewis Ferguson",
-          "posicao": "Atacante",
-          "habilidade": 78,
-          "over": 79,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Saulo Bezerra",
-          "posicao": "Atacante",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Pedro Caldas",
-          "posicao": "Atacante",
-          "habilidade": 87,
-          "over": 85,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Brunno Santos",
-          "posicao": "Meio Campo",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Zau",
-          "posicao": "Goleiro",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Hiroshi",
-          "posicao": "Goleiro",
-          "habilidade": 86,
-          "over": 84,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Sassa",
-          "posicao": "Goleiro",
-          "habilidade": 75,
-          "over": 76,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Oliver Wayne",
-          "posicao": "Zagueiro",
-          "habilidade": 93,
-          "over": 91,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Corvino",
-          "posicao": "Ponta",
-          "habilidade": 88,
-          "over": 86,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Pdrz",
-          "posicao": "Atacante",
-          "habilidade": 88,
-          "over": 86,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Nott",
-          "posicao": "Meio",
-          "habilidade": 85,
-          "over": 83,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Keven",
-          "posicao": "Atacante",
-          "habilidade": 88,
-          "over": 86,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Ronaldinho Cruzeiro",
-          "posicao": "Ponta",
-          "habilidade": 86,
-          "over": 84,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Carlos Cruzeiro",
-          "posicao": "Meio",
-          "habilidade": 87,
-          "over": 85,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Gustavo Soares",
-          "posicao": "Meia-Central",
-          "habilidade": 83,
-          "over": 82,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Crazy",
-          "posicao": "Ponta",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Pietro",
-          "posicao": "Volante",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Matheus Taylor",
-          "posicao": "Ponta Esq.",
-          "habilidade": 98,
-          "over": 96,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Juliano Henrique",
-          "posicao": "Atacante",
-          "habilidade": 100,
-          "over": 99,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Michael Owen",
-          "posicao": "Goleiro",
-          "habilidade": 100,
-          "over": 99,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Phillipe Guedes",
-          "posicao": "Atacante",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Prince",
-          "posicao": "Ponta Direita",
-          "habilidade": 93,
-          "over": 91,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Hiroshi",
-          "posicao": "Zagueiro",
-          "habilidade": 92,
-          "over": 90,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Felipe Botelho",
-          "posicao": "Meio Campo",
-          "habilidade": 88,
-          "over": 87,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "M. De Light",
-          "posicao": "Zagueiro",
-          "habilidade": 92,
-          "over": 90,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Kai Guedes",
-          "posicao": "Ponta Dir.",
-          "habilidade": 92,
-          "over": 90,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Macaé",
-          "posicao": "Atacante",
-          "habilidade": 90,
-          "over": 89,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Lucas Bask",
-          "posicao": "Zagueiro",
-          "habilidade": 78,
-          "over": 79,
-          "tipo": "admin_grant"
         },
         {
           "nome": "Sam Ker",
           "posicao": "Atacante",
           "habilidade": 74,
           "over": 75,
-          "tipo": "admin_grant"
+          "tipo": "comprado"
         },
         {
-          "nome": "Jake Willy",
-          "posicao": "Atacante",
-          "habilidade": 68,
-          "over": 69,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Zake Zau",
-          "posicao": "Volante",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Helena Silva",
-          "posicao": "Zagueira",
-          "habilidade": 70,
-          "over": 70,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Luan Alves",
+          "nome": "Hiroshi",
           "posicao": "Goleiro",
-          "habilidade": 68,
-          "over": 69,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Fernando M.",
-          "posicao": "Atacante",
-          "habilidade": 71,
-          "over": 71,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Coutinho S.",
-          "posicao": "Meio Campo",
-          "habilidade": 68,
-          "over": 69,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Kaio Becker",
-          "posicao": "Zagueiro",
-          "habilidade": 66,
-          "over": 67,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Caio Miguel",
-          "posicao": "Goleiro",
-          "habilidade": 68,
-          "over": 69,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Alex",
-          "posicao": "Volante",
-          "habilidade": 74,
-          "over": 75,
-          "tipo": "admin_grant"
-        },
-        {
-          "nome": "Matheus Mtzx",
-          "posicao": "Ponta Dir.",
-          "habilidade": 70,
-          "over": 70,
-          "tipo": "admin_grant"
+          "habilidade": 86,
+          "over": 84,
+          "tipo": "comprado"
         }
       ],
+      "time": {
+        "nome": "Messiânica",
+        "sigla": "WIN",
+        "criado_em": "2025-06-01T00:55:32.330762"
+      },
       "escalacao": {
         "goleiro": {
-          "nome": "Zau",
+          "nome": "Hiroshi",
           "posicao": "Goleiro",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        },
-        "zagueiro1": {
-          "nome": "Oliver Wayne",
-          "posicao": "Zagueiro",
-          "habilidade": 93,
-          "over": 91,
-          "tipo": "admin_grant"
-        },
-        "zagueiro2": {
-          "nome": "Bruno",
-          "posicao": "Zagueiro",
           "habilidade": 86,
           "over": 84,
-          "tipo": "admin_grant"
+          "tipo": "comprado"
         },
-        "lateral_esq": {
-          "nome": "Zargão",
-          "posicao": "Zagueiro",
-          "habilidade": 82,
-          "over": 80,
-          "tipo": "admin_grant"
-        },
-        "lateral_dir": {
-          "nome": "Nott",
-          "posicao": "Meio",
-          "habilidade": 85,
-          "over": 83,
-          "tipo": "admin_grant"
-        },
-        "volante": {
-          "nome": "Anthony",
-          "posicao": "Meia",
-          "habilidade": 87,
-          "over": 85,
-          "tipo": "admin_grant"
-        },
+        "zagueiro1": null,
+        "zagueiro2": null,
+        "lateral_esq": null,
+        "lateral_dir": null,
+        "volante": null,
         "meia": {
-          "nome": "Carlos Cruzeiro",
-          "posicao": "Meio",
-          "habilidade": 87,
-          "over": 85,
-          "tipo": "admin_grant"
-        },
-        "ponta_esq": {
-          "nome": "Corvino",
-          "posicao": "Ponta",
-          "habilidade": 88,
-          "over": 86,
-          "tipo": "admin_grant"
-        },
-        "ponta_dir": {
-          "nome": "Ronaldinho Cruzeiro",
-          "posicao": "Ponta",
-          "habilidade": 86,
-          "over": 84,
-          "tipo": "admin_grant"
-        },
-        "atacante1": {
-          "nome": "Mark Lispector",
-          "posicao": "Atacante",
-          "habilidade": 50,
+          "nome": "Jony",
+          "posicao": "Meia",
+          "habilidade": 58,
           "over": 50,
           "tipo": "criado",
           "evolucoes": 0
         },
-        "atacante2": {
-          "nome": "Saulo Bezerra",
+        "ponta_esq": null,
+        "ponta_dir": null,
+        "atacante1": {
+          "nome": "Sam Ker",
           "posicao": "Atacante",
-          "habilidade": 89,
-          "over": 88,
-          "tipo": "admin_grant"
-        }
+          "habilidade": 74,
+          "over": 75,
+          "tipo": "comprado"
+        },
+        "atacante2": null
       },
       "vitorias": 0,
-      "derrotas": 1,
+      "derrotas": 0,
       "empates": 0,
       "jogadores_criados": 1,
-      "ultimo_ganho_automatico": null
+      "ultimo_ganho_daily": null
+    },
+    "1323305782086996039": {
+      "dinheiro": 100000,
+      "jogadores": [],
+      "time": null,
+      "escalacao": {
+        "goleiro": null,
+        "zagueiro1": null,
+        "zagueiro2": null,
+        "lateral_esq": null,
+        "lateral_dir": null,
+        "volante": null,
+        "meia": null,
+        "ponta_esq": null,
+        "ponta_dir": null,
+        "atacante1": null,
+        "atacante2": null
+      },
+      "vitorias": 0,
+      "derrotas": 0,
+      "empates": 0,
+      "jogadores_criados": 0,
+      "ultimo_ganho_daily": null
+    },
+    "390495283034718230": {
+      "dinheiro": 100000,
+      "jogadores": [],
+      "time": {
+        "nome": "Cristiano ronaldo junior clube",
+        "sigla": "AS",
+        "criado_em": "2025-06-01T00:57:31.794664"
+      },
+      "escalacao": {
+        "goleiro": null,
+        "zagueiro1": null,
+        "zagueiro2": null,
+        "lateral_esq": null,
+        "lateral_dir": null,
+        "volante": null,
+        "meia": null,
+        "ponta_esq": null,
+        "ponta_dir": null,
+        "atacante1": null,
+        "atacante2": null
+      },
+      "vitorias": 0,
+      "derrotas": 0,
+      "empates": 0,
+      "jogadores_criados": 0,
+      "ultimo_ganho_daily": null
     }
   },
-  "ligas": {
-    "1": {
-      "nome": "s",
-      "criador": 983196900910039090,
-      "participantes": [
-        983196900910039090
-      ],
-      "partidas": [],
-      "tabela": {}
-    }
-  },
+  "ligas": {},
   "confrontos": {},
-  "emprestimos": {
-    "1323305782086996039": [
-      {
-        "nome": "Oliver Santos",
-        "posicao": "Goleiro",
-        "habilidade": 82,
-        "over": 80,
-        "partidas_restantes": 1
-      },
-      {
-        "nome": "Prince",
-        "posicao": "Ponta Direita",
-        "habilidade": 93,
-        "over": 91,
-        "partidas_restantes": 1
-      },
-      {
-        "nome": "Crazy",
-        "posicao": "Ponta",
-        "habilidade": 89,
-        "over": 88,
-        "partidas_restantes": 1
-      }
-    ]
-  }
+  "emprestimos": {}
 }
