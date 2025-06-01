@@ -17,8 +17,8 @@ intents.guilds = True
 intents.guild_messages = True
 bot = commands.Bot(command_prefix='-', intents=intents)
 
-# ID do servidor onde a segurança deve estar ativa
-SECURITY_GUILD_ID = 1097629413711024189
+# IDs dos servidores onde a segurança deve estar ativa
+SECURITY_GUILD_IDS = [1097629413711024189, 1369967561218723910]
 
 # Importa configurações de segurança
 try:
@@ -345,8 +345,8 @@ def corrigir_posicao(posicao):
 
 async def verificar_time_obrigatorio(ctx):
     """Verifica se o usuário tem time criado, se não, força a criação"""
-    # Verifica se é o servidor de segurança (comandos de futebol NÃO funcionam lá)
-    if ctx.guild and ctx.guild.id == SECURITY_GUILD_ID:
+    # Verifica se é um dos servidores de segurança (comandos de futebol NÃO funcionam lá)
+    if ctx.guild and ctx.guild.id in SECURITY_GUILD_IDS:
         embed = discord.Embed(
             title="🔒 Servidor de Segurança",
             description="❌ **Comandos de futebol não funcionam neste servidor.**\n\n🛡️ Este é um servidor exclusivo para **Sistema de Segurança**.\n\n⚽ Use os comandos de futebol em outros servidores!",
@@ -564,7 +564,7 @@ async def on_ready():
     await vados.load_data()
     await security_system.load_data()
     print(f'🚀 MXP Football Manager está online e pronto para gerenciar o futebol!')
-    print(f'🔒 Sistema de Segurança ativo APENAS no servidor: {SECURITY_GUILD_ID}')
+    print(f'🔒 Sistema de Segurança ativo APENAS nos servidores: {", ".join(map(str, SECURITY_GUILD_IDS))}')
     print('=' * 50)
     print("✅ Proteções ativas (servidor específico):")
     print("  • Detecção de exclusão de canais")
@@ -607,8 +607,8 @@ async def criar_time(ctx):
 @bot.command(name='daily')
 async def daily(ctx):
     """Coleta seu ganho automático de 50.000 reais (a cada 24h)"""
-    # Verifica se não é o servidor de segurança
-    if ctx.guild and ctx.guild.id == SECURITY_GUILD_ID:
+    # Verifica se não é um dos servidores de segurança
+    if ctx.guild and ctx.guild.id in SECURITY_GUILD_IDS:
         embed = discord.Embed(
             title="🔒 Comando Não Disponível",
             description="❌ Comandos de futebol não funcionam no servidor de segurança.\n\n⚽ Use este comando em outros servidores!",
@@ -669,13 +669,25 @@ async def daily(ctx):
 # Eventos de segurança
 @bot.event
 async def on_guild_channel_delete(channel):
-    """🔥 Detecta exclusão de canais e pune o responsável"""
+    """🔥 Detecta exclusão de canais, recria automaticamente e pune o responsável"""
     try:
         guild = channel.guild
         
-        # Verifica se é o servidor com segurança ativa
-        if guild.id != SECURITY_GUILD_ID:
+        # Verifica se é um dos servidores com segurança ativa
+        if guild.id not in SECURITY_GUILD_IDS:
             return  # Não aplica segurança em outros servidores
+        
+        # Salva informações do canal antes de tentar recriar
+        channel_data = {
+            'name': channel.name,
+            'type': channel.type,
+            'category': channel.category,
+            'position': channel.position,
+            'topic': getattr(channel, 'topic', None),
+            'nsfw': getattr(channel, 'nsfw', False),
+            'slowmode_delay': getattr(channel, 'slowmode_delay', 0),
+            'overwrites': {str(target.id): overwrite._values for target, overwrite in channel.overwrites.items()}
+        }
         
         # Aguarda um pouco para o audit log ser atualizado
         await asyncio.sleep(2)
@@ -693,62 +705,102 @@ async def on_guild_channel_delete(channel):
                         f"🟢 {executor.mention} deletou o canal, mas está na whitelist.",
                         0x00ff00,
                         [
-                            {'name': '📺 Canal Deletado', 'value': f"#{channel.name}", 'inline': True},
+                            {'name': '📺 Canal Deletado', 'value': f"#{channel_data['name']}", 'inline': True},
                             {'name': '👤 Responsável', 'value': executor.mention, 'inline': True},
-                            {'name': '✅ Status', 'value': "Usuário autorizado", 'inline': True}
+                            {'name': '✅ Status', 'value': "Usuário autorizado - sem recriação", 'inline': True}
                         ]
                     )
                     return
                 
-                # Se chegou aqui, é uma ação suspeita
-                member = guild.get_member(executor.id)
-                if not member:
-                    return
-                
-                # Salva os cargos antes de remover
-                original_roles = [role for role in member.roles if role != guild.default_role]
-                role_names = [role.name for role in original_roles]
-                
-                # Salva para possível restauração
-                security_system.restored_roles[str(executor.id)] = {
-                    'roles': [role.id for role in original_roles],
-                    'removed_at': datetime.utcnow().isoformat(),
-                    'reason': f"Deletou canal #{channel.name}",
-                    'guild_id': guild.id
-                }
-                
-                # Remove todos os cargos
+                # Se chegou aqui, é uma ação suspeita - RECRIA O CANAL
                 try:
-                    await member.remove_roles(*original_roles, reason="🔒 Segurança: Deletou canal sem autorização")
+                    # Cria o novo canal
+                    if channel_data['type'] == discord.ChannelType.text:
+                        novo_canal = await guild.create_text_channel(
+                            name=channel_data['name'],
+                            category=channel_data['category'],
+                            topic=channel_data['topic'],
+                            nsfw=channel_data['nsfw'],
+                            slowmode_delay=channel_data['slowmode_delay'],
+                            position=channel_data['position'],
+                            reason="🔒 Canal recriado automaticamente pelo sistema de segurança"
+                        )
+                    elif channel_data['type'] == discord.ChannelType.voice:
+                        novo_canal = await guild.create_voice_channel(
+                            name=channel_data['name'],
+                            category=channel_data['category'],
+                            position=channel_data['position'],
+                            reason="🔒 Canal recriado automaticamente pelo sistema de segurança"
+                        )
+                    else:
+                        # Para outros tipos de canal, cria como texto
+                        novo_canal = await guild.create_text_channel(
+                            name=channel_data['name'],
+                            category=channel_data['category'],
+                            reason="🔒 Canal recriado automaticamente pelo sistema de segurança"
+                        )
                     
-                    await security_system.log_security_action(
-                        guild,
-                        "🚨 AÇÃO SUSPEITA DETECTADA - Canal Deletado",
-                        f"⚠️ **{executor.mention}** deletou o canal **#{channel.name}** e teve todos os cargos removidos!",
-                        0xff0000,
-                        [
-                            {'name': '📺 Canal Deletado', 'value': f"#{channel.name}", 'inline': True},
-                            {'name': '👤 Responsável', 'value': f"{executor.mention}\n({executor.id})", 'inline': True},
-                            {'name': '⚡ Ação Tomada', 'value': "Todos os cargos removidos", 'inline': True},
-                            {'name': '🎭 Cargos Removidos', 'value': ', '.join(role_names) if role_names else "Nenhum cargo", 'inline': False},
-                            {'name': '🔄 Restauração', 'value': "Use `-sec_restore` para reverter", 'inline': True}
-                        ]
-                    )
+                    # Tenta restaurar permissões
+                    for target_id, overwrite_data in channel_data['overwrites'].items():
+                        try:
+                            target = guild.get_member(int(target_id)) or guild.get_role(int(target_id))
+                            if target:
+                                overwrite = discord.PermissionOverwrite(**{k: v for k, v in overwrite_data.items() if v is not None})
+                                await novo_canal.set_permissions(target, overwrite=overwrite)
+                        except:
+                            pass  # Ignora erros de permissão específicas
                     
-                    print(f"🔒 SEGURANÇA: Cargos removidos de {executor} por deletar canal #{channel.name}")
+                    canal_recriado = True
+                    canal_novo_id = novo_canal.id
                     
                 except Exception as e:
-                    await security_system.log_security_action(
-                        guild,
-                        "❌ Erro na Remoção de Cargos",
-                        f"Não foi possível remover cargos de {executor.mention}",
-                        0xff9900,
-                        [
-                            {'name': '📺 Canal Deletado', 'value': f"#{channel.name}", 'inline': True},
-                            {'name': '👤 Responsável', 'value': executor.mention, 'inline': True},
-                            {'name': '❌ Erro', 'value': str(e)[:1000], 'inline': False}
-                        ]
-                    )
+                    print(f"❌ Erro ao recriar canal: {e}")
+                    canal_recriado = False
+                    canal_novo_id = None
+                
+                # PUNE O USUÁRIO mesmo com recriação
+                member = guild.get_member(executor.id)
+                if member:
+                    # Salva os cargos antes de remover
+                    original_roles = [role for role in member.roles if role != guild.default_role]
+                    role_names = [role.name for role in original_roles]
+                    
+                    # Salva para possível restauração
+                    security_system.restored_roles[str(executor.id)] = {
+                        'roles': [role.id for role in original_roles],
+                        'removed_at': datetime.utcnow().isoformat(),
+                        'reason': f"Deletou canal #{channel_data['name']}",
+                        'guild_id': guild.id
+                    }
+                    
+                    try:
+                        await member.remove_roles(*original_roles, reason="🔒 Segurança: Deletou canal sem autorização")
+                        punição_aplicada = "Todos os cargos removidos"
+                    except Exception as e:
+                        punição_aplicada = f"Erro ao remover cargos: {str(e)[:100]}"
+                else:
+                    punição_aplicada = "Usuário não encontrado no servidor"
+                    role_names = []
+                
+                # Log detalhado com informações de recriação
+                await security_system.log_security_action(
+                    guild,
+                    "🚨 CANAL DELETADO - RECRIADO AUTOMATICAMENTE",
+                    f"⚠️ **{executor.mention}** deletou o canal **#{channel_data['name']}** mas foi recriado automaticamente!",
+                    0xff4500,
+                    [
+                        {'name': '📺 Canal Original', 'value': f"#{channel_data['name']} (ID: {channel.id})", 'inline': True},
+                        {'name': '🔄 Canal Recriado', 'value': f"#{novo_canal.name} (ID: {canal_novo_id})" if canal_recriado else "❌ Falha na recriação", 'inline': True},
+                        {'name': '👤 Responsável', 'value': f"{executor.mention}\n({executor.id})", 'inline': True},
+                        {'name': '⚡ Ação Tomada', 'value': punição_aplicada, 'inline': True},
+                        {'name': '🔄 Status Recriação', 'value': "✅ Sucesso" if canal_recriado else "❌ Falhou", 'inline': True},
+                        {'name': '📝 Tipo do Canal', 'value': str(channel_data['type']).replace('ChannelType.', ''), 'inline': True},
+                        {'name': '🎭 Cargos Removidos', 'value': ', '.join(role_names) if role_names else "Nenhum cargo", 'inline': False},
+                        {'name': '🔧 Restauração Manual', 'value': "Use `-sec_restore` para reverter punição", 'inline': True}
+                    ]
+                )
+                
+                print(f"🔒 SEGURANÇA: Canal #{channel_data['name']} recriado automaticamente após exclusão por {executor}")
                 break
     
     except Exception as e:
@@ -756,13 +808,24 @@ async def on_guild_channel_delete(channel):
 
 @bot.event
 async def on_guild_role_delete(role):
-    """🎭 Detecta exclusão de cargos e pune o responsável"""
+    """🎭 Detecta exclusão de cargos, recria automaticamente e pune o responsável"""
     try:
         guild = role.guild
         
-        # Verifica se é o servidor com segurança ativa
-        if guild.id != SECURITY_GUILD_ID:
+        # Verifica se é um dos servidores com segurança ativa
+        if guild.id not in SECURITY_GUILD_IDS:
             return  # Não aplica segurança em outros servidores
+        
+        # Salva informações do cargo antes de tentar recriar
+        role_data = {
+            'name': role.name,
+            'color': role.color,
+            'hoist': role.hoist,
+            'mentionable': role.mentionable,
+            'permissions': role.permissions,
+            'position': role.position,
+            'reason': "🔒 Cargo recriado automaticamente pelo sistema de segurança"
+        }
         
         # Aguarda um pouco para o audit log ser atualizado
         await asyncio.sleep(2)
@@ -780,75 +843,90 @@ async def on_guild_role_delete(role):
                         f"🟢 {executor.mention} deletou o cargo, mas está na whitelist.",
                         0x00ff00,
                         [
-                            {'name': '🎭 Cargo Deletado', 'value': f"@{role.name}", 'inline': True},
+                            {'name': '🎭 Cargo Deletado', 'value': f"@{role_data['name']}", 'inline': True},
                             {'name': '👤 Responsável', 'value': executor.mention, 'inline': True},
-                            {'name': '✅ Status', 'value': "Usuário autorizado", 'inline': True}
+                            {'name': '✅ Status', 'value': "Usuário autorizado - sem recriação", 'inline': True}
                         ]
                     )
                     return
                 
-                # Se chegou aqui, é uma ação suspeita
+                # Se chegou aqui, é uma ação suspeita - RECRIA O CARGO
+                try:
+                    novo_cargo = await guild.create_role(
+                        name=role_data['name'],
+                        color=role_data['color'],
+                        hoist=role_data['hoist'],
+                        mentionable=role_data['mentionable'],
+                        permissions=role_data['permissions'],
+                        reason=role_data['reason']
+                    )
+                    
+                    # Tenta mover o cargo para a posição original
+                    try:
+                        await novo_cargo.edit(position=role_data['position'])
+                    except:
+                        pass  # Se não conseguir mover, mantém na posição padrão
+                    
+                    cargo_recriado = True
+                    cargo_novo_id = novo_cargo.id
+                    
+                except Exception as e:
+                    print(f"❌ Erro ao recriar cargo: {e}")
+                    cargo_recriado = False
+                    cargo_novo_id = None
+                
+                # PUNE O USUÁRIO mesmo com recriação
                 member = guild.get_member(executor.id)
-                if not member:
-                    return
+                if member:
+                    # Salva os cargos antes de aplicar punição
+                    original_roles = [r for r in member.roles if r != guild.default_role]
+                    role_names = [r.name for r in original_roles]
+                    
+                    # Salva para possível restauração
+                    security_system.restored_roles[str(executor.id)] = {
+                        'roles': [r.id for r in original_roles],
+                        'removed_at': datetime.utcnow().isoformat(),
+                        'reason': f"Deletou cargo @{role_data['name']}",
+                        'guild_id': guild.id
+                    }
+                    
+                    # Aplica punição baseada na configuração
+                    if security_system.config['role_delete_punishment'] == 'ban':
+                        try:
+                            await member.ban(reason=f"🔒 Segurança: Deletou cargo @{role_data['name']} sem autorização")
+                            punição_aplicada = "**BANIDO**"
+                        except Exception as e:
+                            punição_aplicada = f"Erro ao banir: {str(e)[:100]}"
+                    else:  # remove_roles (padrão)
+                        try:
+                            await member.remove_roles(*original_roles, reason=f"🔒 Segurança: Deletou cargo @{role_data['name']} sem autorização")
+                            punição_aplicada = "Todos os cargos removidos"
+                        except Exception as e:
+                            punição_aplicada = f"Erro ao remover cargos: {str(e)[:100]}"
+                else:
+                    punição_aplicada = "Usuário não encontrado no servidor"
+                    role_names = []
                 
-                # Salva os cargos antes de aplicar punição
-                original_roles = [r for r in member.roles if r != guild.default_role]
-                role_names = [r.name for r in original_roles]
+                # Log detalhado com informações de recriação
+                await security_system.log_security_action(
+                    guild,
+                    "🚨 CARGO DELETADO - RECRIADO AUTOMATICAMENTE",
+                    f"⚠️ **{executor.mention}** deletou o cargo **@{role_data['name']}** mas foi recriado automaticamente!",
+                    0xff4500,
+                    [
+                        {'name': '🎭 Cargo Original', 'value': f"@{role_data['name']} (ID: {role.id})", 'inline': True},
+                        {'name': '🔄 Cargo Recriado', 'value': f"@{novo_cargo.name} (ID: {cargo_novo_id})" if cargo_recriado else "❌ Falha na recriação", 'inline': True},
+                        {'name': '👤 Responsável', 'value': f"{executor.mention}\n({executor.id})", 'inline': True},
+                        {'name': '⚡ Ação Tomada', 'value': punição_aplicada, 'inline': True},
+                        {'name': '🔄 Status Recriação', 'value': "✅ Sucesso" if cargo_recriado else "❌ Falhou", 'inline': True},
+                        {'name': '🎨 Cor Original', 'value': f"{role_data['color']}", 'inline': True},
+                        {'name': '🔧 Permissões', 'value': f"{len([p for p, v in role_data['permissions'] if v])} permissões ativas", 'inline': True},
+                        {'name': '🎭 Cargos Removidos', 'value': ', '.join(role_names) if role_names else "Nenhum cargo", 'inline': False},
+                        {'name': '🔧 Restauração Manual', 'value': "Use `-sec_restore` para reverter punição", 'inline': True}
+                    ]
+                )
                 
-                # Salva para possível restauração
-                security_system.restored_roles[str(executor.id)] = {
-                    'roles': [r.id for r in original_roles],
-                    'removed_at': datetime.utcnow().isoformat(),
-                    'reason': f"Deletou cargo @{role.name}",
-                    'guild_id': guild.id
-                }
-                
-                # Aplica punição baseada na configuração
-                if security_system.config['role_delete_punishment'] == 'ban':
-                    try:
-                        await member.ban(reason=f"🔒 Segurança: Deletou cargo @{role.name} sem autorização")
-                        
-                        await security_system.log_security_action(
-                            guild,
-                            "🚨 AÇÃO SUSPEITA DETECTADA - Cargo Deletado",
-                            f"⚠️ **{executor.mention}** deletou o cargo **@{role.name}** e foi BANIDO!",
-                            0xff0000,
-                            [
-                                {'name': '🎭 Cargo Deletado', 'value': f"@{role.name}", 'inline': True},
-                                {'name': '👤 Responsável', 'value': f"{executor.mention}\n({executor.id})", 'inline': True},
-                                {'name': '⚡ Ação Tomada', 'value': "**BANIDO**", 'inline': True},
-                                {'name': '🎭 Cargos que Tinha', 'value': ', '.join(role_names) if role_names else "Nenhum cargo", 'inline': False}
-                            ]
-                        )
-                        
-                        print(f"🔒 SEGURANÇA: {executor} foi BANIDO por deletar cargo @{role.name}")
-                        
-                    except Exception as e:
-                        print(f"❌ Erro ao banir usuário: {e}")
-                
-                else:  # remove_roles (padrão)
-                    try:
-                        await member.remove_roles(*original_roles, reason=f"🔒 Segurança: Deletou cargo @{role.name} sem autorização")
-                        
-                        await security_system.log_security_action(
-                            guild,
-                            "🚨 AÇÃO SUSPEITA DETECTADA - Cargo Deletado",
-                            f"⚠️ **{executor.mention}** deletou o cargo **@{role.name}** e teve todos os cargos removidos!",
-                            0xff0000,
-                            [
-                                {'name': '🎭 Cargo Deletado', 'value': f"@{role.name}", 'inline': True},
-                                {'name': '👤 Responsável', 'value': f"{executor.mention}\n({executor.id})", 'inline': True},
-                                {'name': '⚡ Ação Tomada', 'value': "Todos os cargos removidos", 'inline': True},
-                                {'name': '🎭 Cargos Removidos', 'value': ', '.join(role_names) if role_names else "Nenhum cargo", 'inline': False},
-                                {'name': '🔄 Restauração', 'value': "Use `-sec_restore` para reverter", 'inline': True}
-                            ]
-                        )
-                        
-                        print(f"🔒 SEGURANÇA: Cargos removidos de {executor} por deletar cargo @{role.name}")
-                        
-                    except Exception as e:
-                        print(f"❌ Erro ao remover cargos: {e}")
+                print(f"🔒 SEGURANÇA: Cargo @{role_data['name']} recriado automaticamente após exclusão por {executor}")
                 break
     
     except Exception as e:
@@ -866,8 +944,8 @@ async def on_member_join(member):
     try:
         guild = member.guild
         
-        # Verifica se é o servidor com segurança ativa
-        if guild.id != SECURITY_GUILD_ID:
+        # Verifica se é um dos servidores com segurança ativa
+        if guild.id not in SECURITY_GUILD_IDS:
             return  # Não aplica segurança em outros servidores
         
         # Bane o bot automaticamente
@@ -2578,11 +2656,11 @@ async def manage_whitelist(ctx, action: str = None, user_id: str = None):
 @bot.command(name='sec_status')
 async def security_status(ctx):
     """Mostra o status do sistema de segurança"""
-    # Verifica se é o servidor com segurança ativa
-    if ctx.guild.id != SECURITY_GUILD_ID:
+    # Verifica se é um dos servidores com segurança ativa
+    if ctx.guild.id not in SECURITY_GUILD_IDS:
         embed = discord.Embed(
             title="🔒 Sistema de Segurança",
-            description=f"❌ **Sistema de segurança INATIVO neste servidor.**\n\n✅ **Ativo apenas no servidor:** `{SECURITY_GUILD_ID}`",
+            description=f"❌ **Sistema de segurança INATIVO neste servidor.**\n\n✅ **Ativo nos servidores:** `{', '.join(map(str, SECURITY_GUILD_IDS))}`",
             color=0xff9900
         )
         await ctx.send(embed=embed)
@@ -2650,8 +2728,8 @@ async def security_status(ctx):
 @bot.command(name='ajuda')
 async def ajuda(ctx):
     """Central de ajuda completa do MXP Football Manager"""
-    # Verifica se é o servidor de segurança
-    if ctx.guild and ctx.guild.id == SECURITY_GUILD_ID:
+    # Verifica se é um dos servidores de segurança
+    if ctx.guild and ctx.guild.id in SECURITY_GUILD_IDS:
         embed = discord.Embed(
             title="🔒 Sistema de Segurança - Ajuda",
             description="🛡️ **Sistema de Segurança Automático**\n\n❌ **Comandos de futebol não funcionam neste servidor.**",
@@ -2678,7 +2756,13 @@ async def ajuda(ctx):
         
         embed.add_field(
             name="🔒 **PROTEÇÕES AUTOMÁTICAS ATIVAS**",
-            value="• **Exclusão de Canais:** Remove cargos do responsável\n• **Exclusão de Cargos:** Punição configurável\n• **Bots Invasores:** Banimento automático\n• **Logs de Segurança:** Registra todas as ações\n• **Whitelist:** Usuários autorizados protegidos",
+            value="• **Recriação Automática:** Canais/cargos deletados são recriados instantaneamente\n• **Exclusão de Canais:** Remove cargos + recria canal automaticamente\n• **Exclusão de Cargos:** Punição configurável + recria cargo\n• **Bots Invasores:** Banimento automático\n• **Logs Detalhados:** Registra recriações e todas as ações\n• **Whitelist:** Usuários autorizados podem deletar sem recriação",
+            inline=False
+        )
+        
+        embed.add_field(
+            name="📚 **COMANDOS COMPLETOS**",
+            value="[Comandos completos aqui](https://discord.gg/AtKgQHZGks)",
             inline=False
         )
         
@@ -2748,13 +2832,19 @@ async def ajuda(ctx):
     
     embed.add_field(
         name="🔒 **PROTEÇÕES AUTOMÁTICAS ATIVAS**",
-        value="• **Exclusão de Canais:** Remove cargos do responsável\n• **Exclusão de Cargos:** Punição configurável\n• **Bots Invasores:** Banimento automático\n• **Logs de Segurança:** Registra todas as ações\n• **Whitelist:** Usuários autorizados protegidos",
+        value="• **Recriação Automática:** Canais/cargos deletados são recriados instantaneamente\n• **Exclusão de Canais:** Remove cargos do responsável + recria canal\n• **Exclusão de Cargos:** Punição configurável + recria cargo\n• **Bots Invasores:** Banimento automático\n• **Logs Detalhados:** Registra recriações e ações\n• **Whitelist:** Usuários autorizados podem deletar sem recriação",
         inline=False
     )
     
     embed.add_field(
         name="🎯 **NOVIDADES**",
-        value="• **X1:** Escolha seu jogador para duelos épicos\n• **Modais:** Criação segura de times e jogadores\n• **Segurança:** Proteção automática integrada\n• **Times:** Obrigatório para todas as funcionalidades",
+        value="• **X1:** Escolha seu jogador para duelos épicos\n• **Modais:** Criação segura de times e jogadores\n• **Segurança:** Proteção automática integrada\n• **Recriação:** Canais/cargos deletados são recriados automaticamente\n• **Times:** Obrigatório para todas as funcionalidades",
+        inline=False
+    )
+    
+    embed.add_field(
+        name="📚 **COMANDOS COMPLETOS**",
+        value="[Comandos completos aqui](https://discord.gg/AtKgQHZGks)",
         inline=False
     )
     
