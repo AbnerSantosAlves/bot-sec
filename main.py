@@ -149,18 +149,22 @@ class SecurityBot:
             print(f"❌ Erro ao salvar dados de segurança: {e}")
     
     async def get_logs_channel(self, guild):
-        """Encontra ou cria o canal de logs"""
-        logs_channel = discord.utils.get(guild.channels, name=self.config['logs_channel_name'])
+        """Encontra o canal de logs específico por ID"""
+        # ID do canal específico para logs de segurança
+        LOGS_CHANNEL_ID = 1335821136205709332
+        
+        logs_channel = guild.get_channel(LOGS_CHANNEL_ID)
         
         if not logs_channel:
-            # Cria o canal de logs se não existir
+            print(f"❌ Canal de logs com ID {LOGS_CHANNEL_ID} não encontrado!")
+            # Tenta criar um canal com o nome configurado como fallback
             try:
                 logs_channel = await guild.create_text_channel(
                     self.config['logs_channel_name'],
                     topic="🔒 Canal de logs de segurança automáticos",
                     reason="Canal de segurança criado automaticamente"
                 )
-                print(f"✅ Canal de logs criado: #{logs_channel.name}")
+                print(f"✅ Canal de logs criado como fallback: #{logs_channel.name}")
             except Exception as e:
                 print(f"❌ Erro ao criar canal de logs: {e}")
                 return None
