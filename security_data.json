@@ -1,0 +1,28 @@
+{
+  "restored_roles": {},
+  "security_logs": [
+    {
+      "timestamp": "2025-06-01T01:19:56.171572",
+      "title": "🚨 AÇÃO SUSPEITA DETECTADA - Canal Deletado",
+      "description": "⚠️ **<@1323305782086996039>** deletou o canal **#│﹒◜📝﹑・𝐀valiar-𝐅ormulários﹢** e teve todos os cargos removidos!",
+      "guild_id": 1097629413711024189
+    },
+    {
+      "timestamp": "2025-06-01T01:25:33.027377",
+      "title": "🤖 Bot Banido Automaticamente",
+      "description": "🚫 **<@831140416312180756>** foi banido automaticamente por ser um bot.",
+      "guild_id": 1097629413711024189
+    },
+    {
+      "timestamp": "2025-06-01T01:26:48.323116",
+      "title": "🔄 Cargos Restaurados Manualmente",
+      "description": "Cargos de <@1323305782086996039> foram restaurados por <@983196900910039090>",
+      "guild_id": 1097629413711024189
+    }
+  ],
+  "config": {
+    "auto_ban_bots": true,
+    "role_delete_punishment": "remove_roles",
+    "logs_channel_name": "security-logs"
+  }
+}
