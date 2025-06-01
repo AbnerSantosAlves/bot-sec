@@ -10,6 +10,7 @@ import aiofiles
 from dotenv import load_dotenv
 from keep_alive import keep_alive
 
+
 # Importa configurações personalizáveis
 try:
     from security_config import WHITELIST_IDS, DEFAULT_CONFIG, MESSAGES, COLORS, MONITORED_EVENTS
@@ -44,7 +45,7 @@ intents.members = True
 intents.guilds = True
 intents.guild_messages = True
 
-bot = commands.Bot(command_prefix='!sec_', intents=intents)
+bot = commands.Bot(command_prefix='!sec_', intents=intents, help_command=None)
 
 # Arquivo para salvar dados de segurança
 SECURITY_DATA_FILE = "security_data.json"

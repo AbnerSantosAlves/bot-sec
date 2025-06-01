@@ -11,6 +11,7 @@ from typing import List, Dict, Optional
 from keep_alive import keep_alive
 from dotenv import load_dotenv
 
+
 # Configuração do bot
 intents = discord.Intents.default()
 intents.message_content = True
