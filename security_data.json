@@ -1,5 +1,33 @@
 {
-  "restored_roles": {},
+  "restored_roles": {
+    "1323305782086996039": {
+      "roles": [
+        1319062811804041310,
+        1319062794821304390,
+        1319062777205227602,
+        1319062752345460737,
+        1328479361216811033,
+        1319062746557321286,
+        1319062738684743690,
+        1319062722830405653,
+        1319062681629491211,
+        1319062654039363696,
+        1319062652755906560,
+        1319062651481096203,
+        1319062645407486055,
+        1319062694485299292,
+        1319062624968642671,
+        1319062620107571311,
+        1327016110528270456,
+        1319062597508665365,
+        1319062588671131790,
+        1328272677982572636
+      ],
+      "removed_at": "2025-06-01T01:50:41.985845",
+      "reason": "Deletou canal #⟢🏟՞꒱𝅄𝐇eriberto-𝐇ülse˘͈ᨓ੭",
+      "guild_id": 1097629413711024189
+    }
+  },
   "security_logs": [
     {
       "timestamp": "2025-06-01T01:19:56.171572",
@@ -17,6 +45,24 @@
       "timestamp": "2025-06-01T01:26:48.323116",
       "title": "🔄 Cargos Restaurados Manualmente",
       "description": "Cargos de <@1323305782086996039> foram restaurados por <@983196900910039090>",
+      "guild_id": 1097629413711024189
+    },
+    {
+      "timestamp": "2025-06-01T01:47:28.770424",
+      "title": "🚨 AÇÃO SUSPEITA DETECTADA - Canal Deletado",
+      "description": "⚠️ **<@1323305782086996039>** deletou o canal **#⟢🏟՞꒱𝅄𝐀rena-𝐂ondá˘͈ᨓ੭** e teve todos os cargos removidos!",
+      "guild_id": 1097629413711024189
+    },
+    {
+      "timestamp": "2025-06-01T01:49:33.468301",
+      "title": "🔄 Cargos Restaurados Manualmente",
+      "description": "Cargos de <@1323305782086996039> foram restaurados por <@983196900910039090>",
+      "guild_id": 1097629413711024189
+    },
+    {
+      "timestamp": "2025-06-01T01:51:05.183612",
+      "title": "🚨 AÇÃO SUSPEITA DETECTADA - Canal Deletado",
+      "description": "⚠️ **<@1323305782086996039>** deletou o canal **#⟢🏟՞꒱𝅄𝐇eriberto-𝐇ülse˘͈ᨓ੭** e teve todos os cargos removidos!",
       "guild_id": 1097629413711024189
     }
   ],
