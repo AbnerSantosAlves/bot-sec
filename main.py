@@ -2341,9 +2341,17 @@ async def add_todos_jogadores(ctx, usuario: discord.Member):
 
 # Comandos de segurança
 @bot.command(name='sec_config')
-@commands.has_permissions(administrator=True)
 async def config_security(ctx, setting: str = None, value: str = None):
-    """Configura o sistema de segurança"""
+    """Configura o sistema de segurança (apenas owner)"""
+    # Verifica se é o owner do bot
+    if ctx.author.id != OWNER_ID:
+        embed = discord.Embed(
+            title="🚫 Acesso Negado",
+            description="Apenas o owner do bot pode usar este comando!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
     if not setting:
         embed = discord.Embed(
             title="🔧 Configurações de Segurança",
@@ -2399,9 +2407,17 @@ async def config_security(ctx, setting: str = None, value: str = None):
     await ctx.send(embed=embed)
 
 @bot.command(name='sec_restore')
-@commands.has_permissions(administrator=True)
 async def restore_roles(ctx, user_id: str):
-    """Restaura os cargos de um usuário removido pelo sistema"""
+    """Restaura os cargos de um usuário removido pelo sistema (apenas owner)"""
+    # Verifica se é o owner do bot
+    if ctx.author.id != OWNER_ID:
+        embed = discord.Embed(
+            title="🚫 Acesso Negado",
+            description="Apenas o owner do bot pode usar este comando!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
     if user_id not in security_system.restored_roles:
         embed = discord.Embed(
             title="❌ Usuário Não Encontrado",
