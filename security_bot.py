@@ -7,6 +7,8 @@ import os
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional
 import aiofiles
+from dotenv import load_dotenv
+from keep_alive import keep_alive
 
 # Importa configurações personalizáveis
 try:
@@ -53,7 +55,7 @@ class SecurityBot:
         self.security_logs = []
         self.config = {
             'auto_ban_bots': True,
-            'role_delete_punishment': 'remove_roles',  # 'remove_roles' ou 'ban'
+            'role_delete_punishment': 'ban',  # 'remove_roles' ou 'ban'
             'logs_channel_name': 'logs'
         }
     
@@ -712,10 +714,12 @@ async def on_command_error(ctx, error):
 
 # Inicialização do bot
 if __name__ == "__main__":
+    load_dotenv()
     TOKEN = os.getenv('SECURITY_BOT_TOKEN')
     
     if TOKEN:
         print("🚀 Iniciando Sistema de Segurança...")
+        keep_alive()
         bot.run(TOKEN)
     else:
         print("❌ Token do bot de segurança não encontrado!")

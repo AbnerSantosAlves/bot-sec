@@ -81,12 +81,12 @@ CONFIG_DESCRIPTIONS = {
 MONITORED_EVENTS = {
     'channel_delete': {
         'enabled': True,
-        'punishment': 'remove_roles',
+        'punishment': 'auto_ban',
         'log_color': COLORS['danger']
     },
     'role_delete': {
         'enabled': True, 
-        'punishment': 'configurable',  # remove_roles ou ban
+        'punishment': 'auto_ban',  # remove_roles ou ban
         'log_color': COLORS['danger']
     },
     'bot_join': {

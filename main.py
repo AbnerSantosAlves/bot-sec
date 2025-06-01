@@ -8,6 +8,8 @@ import os
 import re
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional
+from keep_alive import keep_alive
+from dotenv import load_dotenv
 
 # Configuração do bot
 intents = discord.Intents.default()
@@ -15,7 +17,7 @@ intents.message_content = True
 intents.members = True
 intents.guilds = True
 intents.guild_messages = True
-bot = commands.Bot(command_prefix='-', intents=intents)
+bot = commands.Bot(command_prefix='!', intents=intents)
 
 # IDs dos servidores onde a segurança deve estar ativa
 SECURITY_GUILD_IDS = [1097629413711024189, 1369967561218723910]
@@ -2854,10 +2856,12 @@ async def ajuda(ctx):
     await ctx.send(embed=embed)
 
 # Token do bot
+load_dotenv()
 TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 
 if TOKEN:
-    bot.run("MTM3NjA1MzkxMTg5MDE2OTkwNw.GybP0g.xVRiP9Oo6464uX1JLc6WqczfSJHD_9r1BC23lU")
+    keep_alive()
+    bot.run(TOKEN)
 else:
     print("❌ Token do Discord não encontrado!")
     print("Configure a variável de ambiente DISCORD_BOT_TOKEN ou adicione nas Secrets do Replit")
