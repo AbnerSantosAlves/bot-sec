@@ -345,6 +345,17 @@ def corrigir_posicao(posicao):
 
 async def verificar_time_obrigatorio(ctx):
     """Verifica se o usuário tem time criado, se não, força a criação"""
+    # Verifica se é o servidor de segurança (comandos de futebol NÃO funcionam lá)
+    if ctx.guild and ctx.guild.id == SECURITY_GUILD_ID:
+        embed = discord.Embed(
+            title="🔒 Servidor de Segurança",
+            description="❌ **Comandos de futebol não funcionam neste servidor.**\n\n🛡️ Este é um servidor exclusivo para **Sistema de Segurança**.\n\n⚽ Use os comandos de futebol em outros servidores!",
+            color=0xff0000
+        )
+        embed.set_footer(text="🔒 Apenas sistema de segurança ativo neste servidor!")
+        await ctx.send(embed=embed)
+        return False
+    
     user_data = vados.get_user_data(ctx.author.id)
     
     if not user_data['time']:
@@ -596,6 +607,16 @@ async def criar_time(ctx):
 @bot.command(name='daily')
 async def daily(ctx):
     """Coleta seu ganho automático de 50.000 reais (a cada 24h)"""
+    # Verifica se não é o servidor de segurança
+    if ctx.guild and ctx.guild.id == SECURITY_GUILD_ID:
+        embed = discord.Embed(
+            title="🔒 Comando Não Disponível",
+            description="❌ Comandos de futebol não funcionam no servidor de segurança.\n\n⚽ Use este comando em outros servidores!",
+            color=0xff0000
+        )
+        await ctx.send(embed=embed)
+        return
+        
     if not await verificar_time_obrigatorio(ctx):
         return
         
@@ -2529,6 +2550,48 @@ async def security_status(ctx):
 @bot.command(name='ajuda')
 async def ajuda(ctx):
     """Central de ajuda completa do MXP Football Manager"""
+    # Verifica se é o servidor de segurança
+    if ctx.guild and ctx.guild.id == SECURITY_GUILD_ID:
+        embed = discord.Embed(
+            title="🔒 Sistema de Segurança - Ajuda",
+            description="🛡️ **Sistema de Segurança Automático**\n\n❌ **Comandos de futebol não funcionam neste servidor.**",
+            color=0xff0000
+        )
+        
+        comandos_seguranca = {
+            "🔒 **Sistema de Segurança**": [
+                "`-sec_status` - Mostra status do sistema de segurança",
+                "`-sec_config` - Configura proteções automáticas",
+                "`-sec_restore <ID>` - Restaura cargos removidos",
+            ],
+            "ℹ️ **Informações**": [
+                "`-ajuda` - Mostra esta central de comandos",
+            ]
+        }
+        
+        for categoria, lista_comandos in comandos_seguranca.items():
+            embed.add_field(
+                name=categoria,
+                value="\n".join(lista_comandos),
+                inline=False
+            )
+        
+        embed.add_field(
+            name="🔒 **PROTEÇÕES AUTOMÁTICAS ATIVAS**",
+            value="• **Exclusão de Canais:** Remove cargos do responsável\n• **Exclusão de Cargos:** Punição configurável\n• **Bots Invasores:** Banimento automático\n• **Logs de Segurança:** Registra todas as ações\n• **Whitelist:** Usuários autorizados protegidos",
+            inline=False
+        )
+        
+        embed.add_field(
+            name="⚽ **Para Comandos de Futebol**",
+            value="Use este bot em **outros servidores** para acessar todos os comandos de futebol!",
+            inline=False
+        )
+        
+        embed.set_footer(text="🔒 Servidor exclusivo para Sistema de Segurança!")
+        await ctx.send(embed=embed)
+        return
+    
     embed = discord.Embed(
         title="🤖 MXP Football Manager + Sistema de Segurança",
         description="⚽ **Seu assistente completo para futebol + proteção automática!**",
