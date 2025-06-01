@@ -17,6 +17,9 @@ intents.guilds = True
 intents.guild_messages = True
 bot = commands.Bot(command_prefix='-', intents=intents)
 
+# ID do servidor onde a segurança deve estar ativa
+SECURITY_GUILD_ID = 1097629413711024189
+
 # Importa configurações de segurança
 try:
     from security_config import WHITELIST_IDS, DEFAULT_CONFIG, MESSAGES, COLORS, MONITORED_EVENTS
@@ -550,9 +553,9 @@ async def on_ready():
     await vados.load_data()
     await security_system.load_data()
     print(f'🚀 MXP Football Manager está online e pronto para gerenciar o futebol!')
-    print('🔒 Sistema de Segurança integrado e ativo!')
+    print(f'🔒 Sistema de Segurança ativo APENAS no servidor: {SECURITY_GUILD_ID}')
     print('=' * 50)
-    print("✅ Proteções ativas:")
+    print("✅ Proteções ativas (servidor específico):")
     print("  • Detecção de exclusão de canais")
     print("  • Detecção de exclusão de cargos")
     print("  • Banimento automático de bots")
@@ -649,6 +652,10 @@ async def on_guild_channel_delete(channel):
     try:
         guild = channel.guild
         
+        # Verifica se é o servidor com segurança ativa
+        if guild.id != SECURITY_GUILD_ID:
+            return  # Não aplica segurança em outros servidores
+        
         # Aguarda um pouco para o audit log ser atualizado
         await asyncio.sleep(2)
         
@@ -731,6 +738,10 @@ async def on_guild_role_delete(role):
     """🎭 Detecta exclusão de cargos e pune o responsável"""
     try:
         guild = role.guild
+        
+        # Verifica se é o servidor com segurança ativa
+        if guild.id != SECURITY_GUILD_ID:
+            return  # Não aplica segurança em outros servidores
         
         # Aguarda um pouco para o audit log ser atualizado
         await asyncio.sleep(2)
@@ -833,6 +844,10 @@ async def on_member_join(member):
     
     try:
         guild = member.guild
+        
+        # Verifica se é o servidor com segurança ativa
+        if guild.id != SECURITY_GUILD_ID:
+            return  # Não aplica segurança em outros servidores
         
         # Bane o bot automaticamente
         await member.ban(reason="🔒 Segurança: Bot banido automaticamente")
@@ -2442,8 +2457,19 @@ async def restore_roles(ctx, user_id: str):
 @bot.command(name='sec_status')
 async def security_status(ctx):
     """Mostra o status do sistema de segurança"""
+    # Verifica se é o servidor com segurança ativa
+    if ctx.guild.id != SECURITY_GUILD_ID:
+        embed = discord.Embed(
+            title="🔒 Sistema de Segurança",
+            description=f"❌ **Sistema de segurança INATIVO neste servidor.**\n\n✅ **Ativo apenas no servidor:** `{SECURITY_GUILD_ID}`",
+            color=0xff9900
+        )
+        await ctx.send(embed=embed)
+        return
+    
     embed = discord.Embed(
         title="🔒 Status do Sistema de Segurança",
+        description=f"✅ **Ativo neste servidor:** `{ctx.guild.id}`",
         color=0x0099ff,
         timestamp=datetime.utcnow()
     )
