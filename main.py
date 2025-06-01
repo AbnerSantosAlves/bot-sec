@@ -980,7 +980,7 @@ async def on_command_error(ctx, error):
             color=0xff0000
         )
         embed.set_footer(text="💡 Dica: Verifique se digitou corretamente!")
-        await ctx.send(embed=embed)
+        print("Comando não encontrado")
     elif isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             title="🚫 Permissões Insuficientes",
