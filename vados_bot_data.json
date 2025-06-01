@@ -29,16 +29,7 @@
     },
     "1167254751038156881": {
       "dinheiro": 100000,
-      "jogadores": [
-        {
-          "nome": "Jhow",
-          "posicao": "Lateral",
-          "habilidade": 49,
-          "over": 50,
-          "tipo": "criado",
-          "evolucoes": 0
-        }
-      ],
+      "jogadores": [],
       "time": {
         "nome": "Souta o Poze",
         "sigla": "SOP",
@@ -60,20 +51,12 @@
       "vitorias": 0,
       "derrotas": 0,
       "empates": 0,
-      "jogadores_criados": 1,
+      "jogadores_criados": 0,
       "ultimo_ganho_daily": null
     },
     "973305294748803162": {
       "dinheiro": 15000,
       "jogadores": [
-        {
-          "nome": "Jony",
-          "posicao": "Meia",
-          "habilidade": 58,
-          "over": 50,
-          "tipo": "criado",
-          "evolucoes": 0
-        },
         {
           "nome": "Sam Ker",
           "posicao": "Atacante",
@@ -129,7 +112,7 @@
       "vitorias": 0,
       "derrotas": 0,
       "empates": 0,
-      "jogadores_criados": 1,
+      "jogadores_criados": 0,
       "ultimo_ganho_daily": null
     },
     "1323305782086996039": {
